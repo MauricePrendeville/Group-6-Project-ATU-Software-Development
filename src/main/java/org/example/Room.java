@@ -16,15 +16,15 @@ public class Room {
         return roomNumber;
     }
 
-    public String getRoomClass() {
-        return roomClass;
-    }
+//    public String getRoomClass() {
+//        return roomClass;
+//    }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
+//    public void setRoomNumber(String roomNumber) {
+//        this.roomNumber = roomNumber;
+//    }
 
-    public void setRoomClass(String roomClass) {
-        this.roomClass = roomClass;
-    }
+//    public void setRoomClass(String roomClass) {
+//        this.roomClass = roomClass;
+//    }
 }

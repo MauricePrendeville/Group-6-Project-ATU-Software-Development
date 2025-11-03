@@ -25,6 +25,7 @@ public class BookingRegister {
     }
 
     public void setBookingRegister(TreeMap<Integer, Booking> bookingRegister) {
+
         this.bookingRegister = bookingRegister;
     }
 
