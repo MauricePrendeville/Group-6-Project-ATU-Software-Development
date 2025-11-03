@@ -10,7 +10,7 @@ public class Booking {
     private LocalDate departDate;
     private LocalDate bookingDate;
     private Guest bookingGuest;
-    //private Receptionist checkingReceptionist;
+    //private Receptionist checkingReceptionist ;
     private Room bookingRoom;
 
     public Booking(String bookingID, LocalDate arriveDate, LocalDate departDate,
