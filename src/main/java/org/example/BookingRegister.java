@@ -1,0 +1,126 @@
+package org.example;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+
+public class BookingRegister {
+
+    private TreeMap<Integer, Booking> bookingRegister;
+    private LocalDate arriveDate;
+    private int bookingID;
+    private ArrayList<Room> roomList;
+    private ArrayList<LocalDate> bookedDates;
+
+    public BookingRegister(LocalDate arriveDate) {
+        this.arriveDate = arriveDate;
+        this.bookingID = 1;
+        this.bookingRegister = new TreeMap<>();
+        this.roomList = new ArrayList<>();
+        this.bookedDates = new ArrayList<>();
+
+    }
+
+    public void setBookingRegister(TreeMap<Integer, Booking> bookingRegister) {
+        this.bookingRegister = bookingRegister;
+    }
+
+    public void setArriveDate(LocalDate arriveDate) {
+        this.arriveDate = arriveDate;
+    }
+
+    public int getBookingID(){
+        return bookingID;
+
+    }
+public void addRoomToRegister(Room room){
+        //boolean addroom =
+                roomList.add(room);
+                System.out.println("Room Added: "+room.getRoomNumber());
+}
+    public String getFormatted_assignment_due_Date(){
+        return arriveDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+    }
+
+    public int return1 (){
+        return 1;
+
+    }
+    public void addBooking(Booking booking){
+
+//        //TreeMap<Booking, Integer> bookingRegister = new TreeMap<>();
+        int nextBookingID = bookingID++;
+        System.out.println(booking.getBookingGuest().getName());
+        bookingRegister.put(nextBookingID, booking);
+        System.out.println("add booking" + nextBookingID);
+    }
+
+    public void showBookings() {
+        System.out.println("List of Bookings: ");
+        for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue().getArriveDate() + " " + entry.getValue().getBookingGuest().getName());
+
+
+        }
+
+    }
+    public void showRooms() {
+            ArrayList<Room> rooms = new ArrayList<>();
+            rooms = roomList;
+            for (Room room : rooms)
+                System.out.println(room.getRoomNumber());
+
+    }
+
+    public void addDatesToRegister(Booking booking, Room room){
+            LocalDate arrive = booking.getArriveDate();
+            LocalDate depart = booking.getDepartDate();
+
+            LocalDate addDate = arrive;
+            while (!addDate.isEqual(depart)){
+                bookedDates.add(addDate);
+                addDate = addDate.plusDays(1);
+            }
+    }
+
+    public boolean checkForBookingOverlap(Booking booking, Room room){
+        LocalDate arrive = booking.getArriveDate();
+        LocalDate depart = booking.getDepartDate();
+
+        ArrayList<LocalDate> potentialBookingDates = new ArrayList<>();
+        LocalDate addDate = arrive;
+        while (!addDate.isEqual(depart)){
+            potentialBookingDates.add(addDate);
+            addDate = addDate.plusDays(1);
+        }
+        for (LocalDate checkDate : bookedDates) {
+            if (potentialBookingDates.contains(checkDate)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    public void showBookedDates(Room room){
+            for (LocalDate bookedDate: bookedDates){
+                System.out.println(bookedDate);
+            }
+
+
+    }
+
+//    public void checkAvailableOnBookingDate(){
+//        boolean isAfter = this.assignmentSubmittedDate.isAfter(this.assignment_Due_Date);
+//        if (isAfter == false )
+//            System.out.println("Assignment submitted on time" + " sub:" + this.assignmentSubmittedDate + " due: " + this.assignment_Due_Date);
+//        else
+//            System.out.println("Assignment submitted late" + " sub:" + this.assignmentSubmittedDate + " due: " + this.assignment_Due_Date);
+//
+//    }
+
+}
