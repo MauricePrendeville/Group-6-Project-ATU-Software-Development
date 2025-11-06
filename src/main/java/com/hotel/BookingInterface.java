@@ -1,6 +1,5 @@
 package com.hotel;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -23,7 +22,7 @@ public class BookingInterface {
         }
     }
 
-    public LocalDate GetValidDate(){
+    public LocalDate getValidDate(){
         LocalDate candidateDate = null;
         Scanner scanning = new Scanner(System.in);
         do {
@@ -48,10 +47,10 @@ public class BookingInterface {
 
        Scanner scanning = new Scanner(System.in);
        System.out.println("Enter Date of Arrival: ");
-       LocalDate arrivalDate = GetValidDate();
+       LocalDate arrivalDate = getValidDate();
 
        System.out.println("Enter Date of Departure: ");
-       LocalDate departureDate = GetValidDate();
+       LocalDate departureDate = getValidDate();
 
 
 
