@@ -1,10 +1,6 @@
-package org.example;
+package com.hotel;
 
 import java.time.LocalDate;
-import java.util.TreeMap;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.Map;
 
 
 /**
@@ -13,7 +9,7 @@ import java.util.Map;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("Hotel System");
 
 
         Guest guest1 = new Guest("Bob");
@@ -22,7 +18,7 @@ public class Main {
         Room room2 = new Room("Two", "Superior Suite");
 
         BookingRegister bookingRegister1 = new BookingRegister(LocalDate.of(2025, 1, 1));
-        System.out.println("Yup");
+
         bookingRegister1.addRoomToRegister(room1);
         bookingRegister1.addRoomToRegister(room2);
 
@@ -41,7 +37,9 @@ public class Main {
                     else
                         System.out.println("Booking Available");
 
-        System.out.println(bookingRegister1.return1());
+
+        BookingInterface bookingInterface = new BookingInterface();
+        bookingInterface.getStayRequestDetails(bookingRegister1,room2);
 
         bookingRegister1.addBooking(booking1);
         bookingRegister1.addBooking(booking2);

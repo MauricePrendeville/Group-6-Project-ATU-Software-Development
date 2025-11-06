@@ -1,7 +1,6 @@
-package org.example;
+package com.hotel;
 
 import java.time.LocalDate;
-import java.util.TreeMap;
 
 public class Booking {
 
@@ -10,7 +9,7 @@ public class Booking {
     private LocalDate departDate;
     private LocalDate bookingDate;
     private Guest bookingGuest;
-    //private Receptionist checkingReceptionist ;
+    //private Receptionist checkingReceptionist;
     private Room bookingRoom;
 
     public Booking(String bookingID, LocalDate arriveDate, LocalDate departDate,

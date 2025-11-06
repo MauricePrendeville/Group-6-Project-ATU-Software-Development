@@ -1,4 +1,4 @@
-package org.example;
+package com.hotel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -25,7 +25,6 @@ public class BookingRegister {
     }
 
     public void setBookingRegister(TreeMap<Integer, Booking> bookingRegister) {
-
         this.bookingRegister = bookingRegister;
     }
 
@@ -42,14 +41,11 @@ public void addRoomToRegister(Room room){
                 roomList.add(room);
                 System.out.println("Room Added: "+room.getRoomNumber());
 }
-    public String getFormatted_assignment_due_Date(){
+    public String getFormattedDate(){
         return arriveDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
     }
 
-    public int return1 (){
-        return 1;
 
-    }
     public void addBooking(Booking booking){
 
 //        //TreeMap<Booking, Integer> bookingRegister = new TreeMap<>();
@@ -86,7 +82,7 @@ public void addRoomToRegister(Room room){
                 addDate = addDate.plusDays(1);
             }
     }
-
+//checkForBookingOverlap returns True if there is an overlap with an existing booking
     public boolean checkForBookingOverlap(Booking booking, Room room){
         LocalDate arrive = booking.getArriveDate();
         LocalDate depart = booking.getDepartDate();

@@ -1,4 +1,4 @@
-package org.example;
+package com.hotel;
 
 public class Guest {
     //basic guest skelton for testing
