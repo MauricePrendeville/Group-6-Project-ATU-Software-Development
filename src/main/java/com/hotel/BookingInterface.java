@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
+//import static jdk.jfr.internal.util.Utils.isAfter;
+
 public class BookingInterface {
 
 
@@ -42,15 +44,45 @@ public class BookingInterface {
 
         return candidateDate;
     }
+//extra getValidDate method to check that the depart date is after the arrive date
+    public LocalDate getValidDate(LocalDate arriveDate){
+        LocalDate candidateDate = null;
+        Scanner scanning = new Scanner(System.in);
+        do {
+            System.out.println("Day of Month: ");
+            int dateDay = scanning.nextInt();
+            System.out.println("Month: ");
+            int dateMonth = scanning.nextInt();
+            System.out.println("Year: ");
+            int dateYear = scanning.nextInt();
+
+            candidateDate = parseDate(dateYear, dateMonth, dateDay);
+            if (candidateDate == null) {
+                System.out.println("Invalid! Try again.");
+            }
+
+            if (candidateDate != null && arriveDate.isAfter(candidateDate)) {
+                candidateDate = null;
+                System.out.println("Invalid! Try again.");
+            }
+            if (candidateDate != null && candidateDate.isEqual(arriveDate)) {
+                candidateDate = null;
+                System.out.println("Invalid! Try again.");
+            }
+
+        } while (candidateDate == null);
+
+        return candidateDate;
+    }
 
     public void getStayRequestDetails (BookingRegister bookingRegister, Room room) {
 
        Scanner scanning = new Scanner(System.in);
        System.out.println("Enter Date of Arrival: ");
-       LocalDate arrivalDate = getValidDate();
+       LocalDate arriveDate = getValidDate();
 
        System.out.println("Enter Date of Departure: ");
-       LocalDate departureDate = getValidDate();
+       LocalDate departDate = getValidDate(arriveDate);
 
 
 
@@ -63,8 +95,8 @@ public class BookingInterface {
 
 //       Room room3 = new Room("Three", "Regular Double");
 
-       Booking booking = new Booking("3", arrivalDate,
-               departureDate, LocalDate.now(), guest, room);
+       Booking booking = new Booking("3", arriveDate,
+               departDate, LocalDate.now(), guest, room);
 
        if(bookingRegister.checkForBookingOverlap(booking, room))
            System.out.println("Booking Unavailable");

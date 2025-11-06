@@ -45,5 +45,7 @@ public class Main {
         bookingRegister1.addBooking(booking2);
         bookingRegister1.showBookings();
         bookingRegister1.showRooms();
+        bookingRegister1.showBookedDates(room1);
+        bookingRegister1.showBookedDates(room2);
     }
 }

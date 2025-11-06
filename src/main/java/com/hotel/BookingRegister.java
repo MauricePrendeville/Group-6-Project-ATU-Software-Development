@@ -36,11 +36,13 @@ public class BookingRegister {
         return bookingID;
 
     }
-public void addRoomToRegister(Room room){
-        //boolean addroom =
-                roomList.add(room);
-                System.out.println("Room Added: "+room.getRoomNumber());
-}
+
+    public void addRoomToRegister(Room room){
+            //boolean addroom =
+                    roomList.add(room);
+                    System.out.println("Room Added: "+room.getRoomNumber() +" "+room.getRoomClass());
+    }
+
     public String getFormattedDate(){
         return arriveDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
     }
@@ -58,12 +60,22 @@ public void addRoomToRegister(Room room){
     public void showBookings() {
         System.out.println("List of Bookings: ");
         for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()) {
-            System.out.println(entry.getKey() + ":" + entry.getValue().getArriveDate() + " " + entry.getValue().getBookingGuest().getName());
-
+            System.out.println(entry.getKey() + ": Arrival: " + entry.getValue().getArriveDate()
+                    + " Departure: " + entry.getValue().getDepartDate()
+                    + " Guest: " + entry.getValue().getBookingGuest().getName()
+                    + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
 
         }
-
     }
+//add option to pass date to this method to get guests on a particular date
+    public void showGuests() {
+        System.out.println("List of Guests: ");
+        for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()) {
+            System.out.println(entry.getKey() + " Guest: " + entry.getValue().getBookingGuest().getName()
+                    + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
+        }
+    }
+
     public void showRooms() {
             ArrayList<Room> rooms = new ArrayList<>();
             rooms = roomList;
@@ -105,7 +117,7 @@ public void addRoomToRegister(Room room){
 
     public void showBookedDates(Room room){
             for (LocalDate bookedDate: bookedDates){
-                System.out.println(bookedDate);
+                System.out.println("Room: "+ room.getRoomNumber() + " Type: "+ room.getRoomClass() +" Date: " + bookedDate);
             }
 
 
