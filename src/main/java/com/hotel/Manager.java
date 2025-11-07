@@ -1,20 +1,16 @@
 package com.hotel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 /**
  * Represents a manager in the hotel.
  * Can generate reports and oversee operations.
- * 
- * @author dev_Amru
+ *
+ * @author dev_amru
  * @version 1.0
  */
-class Manager extends User {
+public class Manager extends User {
     private String department;
 
-    public Manager(String userId, String name, String email, String phone, 
+    public Manager(String userId, String name, String email, String phone,
                    String password, String department) {
         super(userId, name, email, phone, password, UserRole.MANAGER);
         validateInput(department, "Department");

@@ -1,11 +1,12 @@
 package com.hotel;
+
 import java.util.Objects;
 
 /**
  * Abstract base class representing a user in the hotel booking system.
  * This class provides common attributes and methods for all user types.
- * 
- * @author dev_Amru
+ *
+ * @author dev_amru
  * @version 1.0
  */
 public abstract class User {
@@ -18,7 +19,7 @@ public abstract class User {
 
     /**
      * Constructs a new User with the specified details.
-     * 
+     *
      * @param userId unique identifier for the user
      * @param name full name of the user
      * @param email email address
@@ -27,14 +28,14 @@ public abstract class User {
      * @param role the role of the user in the system
      * @throws IllegalArgumentException if any required field is null or empty
      */
-    public User(String userId, String name, String email, String phone, 
+    public User(String userId, String name, String email, String phone,
                 String password, UserRole role) {
         validateInput(userId, "User ID");
         validateInput(name, "Name");
         validateEmail(email);
         validateInput(phone, "Phone");
         validateInput(password, "Password");
-        
+
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -45,7 +46,7 @@ public abstract class User {
 
     /**
      * Validates that a string input is not null or empty.
-     * 
+     *
      * @param input the string to validate
      * @param fieldName the name of the field being validated
      * @throws IllegalArgumentException if input is invalid
@@ -58,7 +59,7 @@ public abstract class User {
 
     /**
      * Validates email format.
-     * 
+     *
      * @param email the email to validate
      * @throws IllegalArgumentException if email is invalid
      */
@@ -72,14 +73,14 @@ public abstract class User {
     /**
      * Abstract method to get user permissions.
      * Each user type implements their specific permissions.
-     * 
+     *
      * @return string describing user permissions
      */
     public abstract String getPermissions();
 
     /**
      * Checks if user has a specific permission.
-     * 
+     *
      * @param permission the permission to check
      * @return true if user has the permission
      */
@@ -94,7 +95,7 @@ public abstract class User {
 
     /**
      * Validates password for authentication.
-     * 
+     *
      * @param password the password to check
      * @return true if password matches
      */
@@ -145,14 +146,4 @@ public abstract class User {
                 ", role=" + role +
                 '}';
     }
-}
-
-/**
- * Enum representing different user roles in the system.
- */
-enum UserRole {
-    ADMIN,
-    RECEPTION_STAFF,
-    CLEANER,
-    MANAGER
 }

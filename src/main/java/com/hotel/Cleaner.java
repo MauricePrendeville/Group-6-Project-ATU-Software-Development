@@ -3,15 +3,14 @@ package com.hotel;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Represents a cleaner in the hotel.
  * Can view assigned rooms and update cleaning status.
- * 
- * @author dev_Amru
+ *
+ * @author dev_amru
  * @version 1.0
  */
-class Cleaner extends User {
+public class Cleaner extends User {
     private List<String> assignedRooms;
 
     public Cleaner(String userId, String name, String email, String phone, String password) {
