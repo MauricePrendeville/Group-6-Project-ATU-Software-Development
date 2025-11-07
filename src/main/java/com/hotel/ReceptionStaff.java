@@ -7,7 +7,7 @@ import java.util.List;
  * Represents reception staff in the hotel.
  * Can manage bookings, check in/out guests, and handle customer service.
  * 
- * @author Group 6
+ * @author dev_amru
  * @version 1.0
  */
 public class ReceptionStaff extends User {
