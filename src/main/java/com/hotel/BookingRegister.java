@@ -18,9 +18,9 @@ public class BookingRegister {
     public BookingRegister(LocalDate arriveDate) {
         this.arriveDate = arriveDate;
         this.bookingID = 1;
-        this.bookingRegister = new TreeMap<>();
+        this.bookingRegister = new TreeMap<>(); //treemap used to keep track of booking details
         this.roomList = new ArrayList<>();
-        this.bookedDates = new ArrayList<>();
+        this.bookedDates = new ArrayList<>(); //array used to check availability of range of dates
 
     }
 
@@ -40,7 +40,7 @@ public class BookingRegister {
     public void addRoomToRegister(Room room){
             //boolean addroom =
                     roomList.add(room);
-                    System.out.println("Room Added: "+room.getRoomNumber() +" "+room.getRoomClass());
+                    System.out.println("Room Added: "+room.getRoomNumber() +" "+room.getRoomType());
     }
 
     public String getFormattedDate(){
@@ -117,7 +117,7 @@ public class BookingRegister {
 
     public void showBookedDates(Room room){
             for (LocalDate bookedDate: bookedDates){
-                System.out.println("Room: "+ room.getRoomNumber() + " Type: "+ room.getRoomClass() +" Date: " + bookedDate);
+                System.out.println("Room: "+ room.getRoomNumber() + " Type: "+ room.getRoomType() +" Date: " + bookedDate);
             }
 
 

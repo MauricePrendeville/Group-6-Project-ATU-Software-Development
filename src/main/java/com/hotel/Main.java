@@ -14,8 +14,8 @@ public class Main {
 
         Guest guest1 = new Guest("Bob");
         Guest guest2 = new Guest("Boab");
-        Room room1 = new Room("One", "Regular Double");
-        Room room2 = new Room("Two", "Superior Suite");
+        Room room1 = new Room(1,RoomType.SINGLE, true, 230 );
+        Room room2 = new Room(2, RoomType.DOUBLE, true, 280 );
 
         BookingRegister bookingRegister1 = new BookingRegister(LocalDate.of(2025, 1, 1));
 

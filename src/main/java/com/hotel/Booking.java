@@ -11,6 +11,7 @@ public class Booking {
     private Guest bookingGuest;
     //private Receptionist checkingReceptionist;
     private Room bookingRoom;
+    //need to add price and price calculator for this class. get price from Room
 
     public Booking(String bookingID, LocalDate arriveDate, LocalDate departDate,
                    LocalDate bookingDate, Guest bookingGuest, Room bookingRoom) {
