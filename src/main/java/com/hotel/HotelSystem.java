@@ -1,7 +1,7 @@
 package com.hotel;
 
-import ie.atu.hotel.manager.*;
-import ie.atu.hotel.model.*;
+import com.hotel.manager.*;
+import com.hotel.model.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Main system class that coordinates all hotel operations.
  * This is the entry point for the application and API layer.
  *
- * @author Group 6
+ * @author dev_Amru
  * @version 1.0
  */
 public class HotelSystem {
