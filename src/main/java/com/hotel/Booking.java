@@ -1,29 +1,57 @@
 package com.hotel;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Booking {
 
-    private String bookingID;
+    private static AtomicInteger bookingIDCounter = new AtomicInteger(0);
+    private int bookingID;
     private LocalDate arriveDate;
     private LocalDate departDate;
     private LocalDate bookingDate;
     private Guest bookingGuest;
     //private Receptionist checkingReceptionist;
     private Room bookingRoom;
+    private BookingStatus bookingStatus;
     //need to add price and price calculator for this class. get price from Room
 
-    public Booking(String bookingID, LocalDate arriveDate, LocalDate departDate,
-                   LocalDate bookingDate, Guest bookingGuest, Room bookingRoom) {
-        this.bookingID = bookingID;
+
+    public Booking(LocalDate arriveDate, LocalDate departDate) {
+        this.bookingID = getNext();
         this.arriveDate = arriveDate;
         this.departDate = departDate;
-        this.bookingDate = bookingDate;
+        this.bookingDate = LocalDate.now();
+        this.bookingGuest = new Guest("Wendy");
+        this.bookingRoom = null;
+        this.bookingStatus = BookingStatus.UNCONFIRMED;
+    }
+    public Booking(LocalDate arriveDate, LocalDate departDate, Guest bookingGuest) {
+        this.bookingID = getNext();
+        this.arriveDate = arriveDate;
+        this.departDate = departDate;
+        this.bookingDate = LocalDate.now();
         this.bookingGuest = bookingGuest;
-        this.bookingRoom = bookingRoom;
+        this.bookingRoom = null;
+        this.bookingStatus = BookingStatus.UNCONFIRMED;
     }
 
-    public String getBookingID() {
+    public Booking(LocalDate arriveDate, LocalDate departDate,
+                   Guest bookingGuest, Room bookingRoom) {
+        this.bookingID = getNext();
+        this.arriveDate = arriveDate;
+        this.departDate = departDate;
+        this.bookingDate = LocalDate.now();
+        this.bookingGuest = bookingGuest;
+        this.bookingRoom = bookingRoom;
+        this.bookingStatus = BookingStatus.UNCONFIRMED;
+    }
+
+    public int getNext() {
+        return bookingIDCounter.getAndIncrement();
+    }
+
+    public int getBookingID() {
         return bookingID;
     }
 
@@ -39,15 +67,21 @@ public class Booking {
         return bookingDate;
     }
 
-    public Guest getBookingGuest() {
-        return bookingGuest;
-    }
+    public Guest getBookingGuest() {return bookingGuest;}
 
     public Room getBookingRoom() {
         return bookingRoom;
     }
 
-    public void setBookingID(String bookingID) {
+    public void setBookingStatus(BookingStatus bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+
+    public BookingStatus getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingID(int bookingID) {
         this.bookingID = bookingID;
     }
 
@@ -71,5 +105,11 @@ public class Booking {
         this.bookingRoom = bookingRoom;
     }
 
+    public void showBookingDetails (Booking booking){
+
+        System.out.println("Guest: " + bookingGuest.getName() + " Room Number: " + bookingRoom.getRoomNumber() + " Type: " + bookingRoom.getRoomType()
+                + " Arrive: " + arriveDate + " Depart: " + departDate + " Status: " + bookingStatus + " BookingID: " + bookingID);
+
+    }
 
 }

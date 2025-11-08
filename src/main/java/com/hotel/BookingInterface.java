@@ -75,7 +75,7 @@ public class BookingInterface {
         return candidateDate;
     }
 
-    public void getStayRequestDetails (BookingRegister bookingRegister, Room room) {
+    public void getStayRequestDetails (RoomInventoryImpl roomInventory) {
 
        Scanner scanning = new Scanner(System.in);
        System.out.println("Enter Date of Arrival: ");
@@ -89,21 +89,40 @@ public class BookingInterface {
        System.out.println("Enter Name: ");
        String guestName = scanning.next();
        Guest guest = new Guest(guestName);
+       RoomType roomType = RoomType.SINGLE;
 
-       System.out.println("Select Room Type: Regular Double (press 1), Superior Suite (press 2)");
-       int roomType = scanning.nextInt();
+       System.out.println("Select Room Type: Single (press 1), Double (press 2), Deluxe (press 3)");
+       int roomTypeNumber =0;
+       switch (roomTypeNumber = scanning.nextInt()){
+            case 1: roomType =  RoomType.SINGLE;
+                break;
+            case 2: roomType = RoomType.DOUBLE;
+                break;
+            case 3: roomType = RoomType.DELUXE;
+                break;
+            case 4: roomType = RoomType.FAMILY;
+                break;
+            case 5: roomType = RoomType.SUITE;
+                break;
+            case 6: roomType = RoomType.PRESIDENTIAL;
+                break;
+
+
+        }
 
 //       Room room3 = new Room("Three", "Regular Double");
 
-       Booking booking = new Booking("3", arriveDate,
-               departDate, LocalDate.now(), guest, room);
+       Booking booking = new Booking(arriveDate,
+               departDate, guest);
 
-       if(bookingRegister.checkForBookingOverlap(booking, room))
-           System.out.println("Booking Unavailable");
-       else {
-           System.out.println("Booking Available");
-           bookingRegister.addBooking(booking);
-       }
+       roomInventory.checkRoomAvailability(booking, roomType);
+       booking.showBookingDetails(booking);
+//       if(bookingRegister.checkForBookingOverlap(booking, room))
+//           System.out.println("Booking Unavailable");
+//       else {
+//           System.out.println("Booking Available");
+//           bookingRegister.addBooking(booking);
+//       }
    }
 
 }

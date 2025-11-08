@@ -66,6 +66,7 @@ public class RoomInventoryImpl {
      * Retrieves a list of all available rooms.
      * @return getAvailableRooms
      */
+    //double check this for loop. debugger suggested it. does it work? MP
     public List<Room> getAvailableRooms() {
         for (Room room : availableRooms = rooms.stream().filter(Room::isAvailable).toList()) {
             
@@ -115,7 +116,62 @@ public class RoomInventoryImpl {
         System.out.println("Total booked rooms: " + bookedRooms);
         return bookedRooms;
     }
+//-----------------------------Check availability and dates-------------------
 
+    public RoomInventoryImpl() {
+    }
+
+    public void checkRoomAvailability (RoomType roomType){
+
+        List<Room> rooms1;
+        for (Room room : rooms){
+            if (room.getRoomType()==roomType){
+            System.out.println(room.getRoomNumber());
+            }
+        }
+
+//        rooms.stream()
+//                .filter(Room ->Room.getRoomType()==roomType)
+//                .forEach(Room -> System.out.println(Room.getRoomNumber()));
+        //for (Room room : rooms = rooms.stream().filter(RoomType::roomType).toList()) {
+
+
+        }
+
+    public void checkRoomAvailability (Booking booking, RoomType roomType){
+
+        System.out.println("Checking Room Availability..." + roomType);
+        List<Room> rooms1;
+        String roomTypeText = roomType.toString();
+
+        //for loop runs through list of all rooms in the hotel roomInventory rooms.
+        // It finds the correct room type first and then checks for date overlap.
+
+        for (Room room : rooms){
+            //System.out.println(room.getRoomType());
+            if (room.getRoomType()==roomType){
+                System.out.println("Possible room number: " + room.getRoomNumber()); //added output for testing MP
+                if(room.checkForBookingOverlap(booking, room))
+                   System.out.println("Booking Unavailable");
+                else {
+                    System.out.println("Booking Available");
+                    booking.setBookingStatus(BookingStatus.POSSIBLE); //update booking status at each phase of process
+                    booking.setBookingRoom(room);
+                    break; //the search will stop at the first room that is the correct type and has available dates that match the booking
+
+                }
+            }
+        }
+
+
+//        rooms.stream()
+//                .filter(Room -> Room.getRoomType() == roomTypeText)
+//                .forEach(Room -> System.out.println(Room.getRoomNumber()));
+//        //for (Room room : rooms = rooms.stream().filter(RoomType::roomType).toList()) {
+
+
+    //}
+    }
 
 
 }

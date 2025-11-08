@@ -123,7 +123,8 @@ public class Room {
 //
 //    }
 
-    public void addDatesToRegister(Booking booking, Room room) {
+    //use addDatesToRegister when the Booking is set to CONFIRMED
+    public void addDatesToRegister(Booking booking) {
         LocalDate arrive = booking.getArriveDate();
         LocalDate depart = booking.getDepartDate();
 
