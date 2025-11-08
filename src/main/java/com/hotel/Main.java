@@ -1,5 +1,6 @@
-package com.hotel;
+package ie.atu.hotel;
 
+import ie.atu.hotel.model.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Scanner;
  * Provides a console interface for staff to manage hotel operations.
  * This is a staff-only system - guests are managed by staff.
  *
- * @author Group 6
+ * @author dev_Amru
  * @version 1.0
  */
 public class Main {
@@ -240,21 +241,24 @@ public class Main {
      * Shows manager menu.
      */
     private static boolean showManagerMenu() {
-        System.out.println("\n┌─────────────────────────────────────┐");
-        System.out.println("│  MANAGER FUNCTIONS                  │");
-        System.out.println("└─────────────────────────────────────┘");
-        System.out.println("  1. Generate Occupancy Report");
-        System.out.println("  2. Generate Booking Report");
-        System.out.println("  3. View Payment Statistics");
-        System.out.println("  4. View All Rooms");
-        System.out.println("  5. View All Bookings");
-        System.out.println("  6. Logout");
-        System.out.println("  7. Exit System");
-        System.out.println("───────────────────────────────────────");
-        System.out.print("Choose option (1-7): ");
+    System.out.println("\n┌─────────────────────────────────────┐");
+    System.out.println("│  MANAGER FUNCTIONS                  │");
+    System.out.println("└─────────────────────────────────────┘");
+    System.out.println("  1. Generate Occupancy Report");
+    System.out.println("  2. Generate Booking Report");
+    System.out.println("  3. View Payment Statistics");
+    System.out.println("  4. View All Rooms");
+    System.out.println("  5. View All Bookings");
+    System.out.println("  6. Add Room");
+    System.out.println("  7. Update Room Status");
+    System.out.println("  8. Remove Room");
+    System.out.println("  9. Logout");
+    System.out.println(" 10. Exit System");
+    System.out.println("───────────────────────────────────────");
+    System.out.print("Choose option (1-10): ");
 
-        String choice = scanner.nextLine().trim();
-        return handleManagerChoice(choice);
+    String choice = scanner.nextLine().trim();
+    return handleManagerChoice(choice);
     }
 
     private static boolean handleManagerChoice(String choice) {
@@ -264,8 +268,11 @@ public class Main {
             case "3": viewPaymentStatistics(); break;
             case "4": viewAllRooms(); break;
             case "5": viewAllBookings(); break;
-            case "6": hotelSystem.logout(); return true;
-            case "7": hotelSystem.logout(); return false;
+            case "6": addRoom(); break;
+            case "7": updateRoomStatusManager(); break;
+            case "8": removeRoom(); break;
+            case "9": hotelSystem.logout(); return true;
+            case "10": hotelSystem.logout(); return false;
             default: System.out.println("\n✗ Invalid option!");
         }
         return true;
@@ -305,6 +312,117 @@ public class Main {
     // ═══════════════════════════════════════════════════════════
     //                    FEATURE IMPLEMENTATIONS
     // ═══════════════════════════════════════════════════════════
+
+        // Manager: Add a new room
+        private static void addRoom() {
+            System.out.println("\n╔════════════════════════════════════════╗");
+            System.out.println("║            ADD NEW ROOM                ║");
+            System.out.println("╚════════════════════════════════════════╝");
+
+            System.out.print("Room Number: ");
+            String roomNumber = scanner.nextLine().trim();
+            System.out.print("Room Type (STANDARD/SUPERIOR/SUITE): ");
+            String typeStr = scanner.nextLine().trim().toUpperCase();
+            System.out.print("Base Price: ");
+            double basePrice = Double.parseDouble(scanner.nextLine().trim());
+
+            try {
+                RoomType type = RoomType.valueOf(typeStr);
+                Room room;
+                switch (type) {
+                    case STANDARD: room = new StandardRoom(roomNumber, basePrice); break;
+                    case SUPERIOR: room = new SuperiorRoom(roomNumber, basePrice); break;
+                    case SUITE: room = new SuiteRoom(roomNumber, basePrice); break;
+                    default: throw new IllegalArgumentException("Invalid room type");
+                }
+                Manager manager = (Manager) hotelSystem.getCurrentUser();
+                manager.addRoom(hotelSystem.getRoomManager(), room);
+                System.out.println("\n✓ Room added successfully!");
+            } catch (Exception e) {
+                System.out.println("\n✗ Failed to add room: " + e.getMessage());
+            }
+            pressEnterToContinue();
+        }
+
+        // Manager: Update room status
+        private static void updateRoomStatusManager() {
+            System.out.println("\n╔════════════════════════════════════════╗");
+            System.out.println("║         UPDATE ROOM STATUS (Manager)   ║");
+            System.out.println("╚════════════════════════════════════════╝");
+
+            System.out.print("Room Number: ");
+            String roomNumber = scanner.nextLine().trim();
+            System.out.println("Available statuses:");
+            System.out.println("1. AVAILABLE");
+            System.out.println("2. OCCUPIED");
+            System.out.println("3. CLEANING");
+            System.out.println("4. MAINTENANCE");
+            System.out.println("5. RESERVED");
+            System.out.print("Choose status (1-5): ");
+            String choice = scanner.nextLine().trim();
+            RoomStatus status;
+            String startDate = "", endDate = "";
+            switch (choice) {
+                case "1": status = RoomStatus.AVAILABLE; break;
+                case "2": status = RoomStatus.OCCUPIED;
+                    System.out.print("Enter OCCUPIED start date (YYYY-MM-DD): ");
+                    startDate = scanner.nextLine().trim();
+                    System.out.print("Enter OCCUPIED end date (YYYY-MM-DD): ");
+                    endDate = scanner.nextLine().trim();
+                    break;
+                case "3": status = RoomStatus.CLEANING; break;
+                case "4": status = RoomStatus.MAINTENANCE;
+                    System.out.print("Enter MAINTENANCE start date (YYYY-MM-DD): ");
+                    startDate = scanner.nextLine().trim();
+                    System.out.print("Enter MAINTENANCE end date (YYYY-MM-DD): ");
+                    endDate = scanner.nextLine().trim();
+                    break;
+                case "5": status = RoomStatus.RESERVED;
+                    System.out.print("Enter RESERVED start date (YYYY-MM-DD): ");
+                    startDate = scanner.nextLine().trim();
+                    System.out.print("Enter RESERVED end date (YYYY-MM-DD): ");
+                    endDate = scanner.nextLine().trim();
+                    break;
+                default:
+                    System.out.println("\n✗ Invalid choice!");
+                    pressEnterToContinue();
+                    return;
+            }
+            try {
+                Manager manager = (Manager) hotelSystem.getCurrentUser();
+                manager.updateRoomStatus(hotelSystem.getRoomManager(), roomNumber, status);
+                if (!startDate.isEmpty() && !endDate.isEmpty()) {
+                    System.out.println("\n✓ Room " + roomNumber + " status updated to " + status + " for dates " + startDate + " to " + endDate);
+                } else {
+                    System.out.println("\n✓ Room " + roomNumber + " status updated to " + status);
+                }
+            } catch (Exception e) {
+                System.out.println("\n✗ Failed: " + e.getMessage());
+            }
+            pressEnterToContinue();
+        }
+
+        // Manager: Remove a room
+        private static void removeRoom() {
+            System.out.println("\n╔════════════════════════════════════════╗");
+            System.out.println("║            REMOVE ROOM                 ║");
+            System.out.println("╚════════════════════════════════════════╝");
+
+            System.out.print("Room Number: ");
+            String roomNumber = scanner.nextLine().trim();
+            try {
+                Manager manager = (Manager) hotelSystem.getCurrentUser();
+                boolean removed = manager.removeRoom(hotelSystem.getRoomManager(), roomNumber);
+                if (removed) {
+                    System.out.println("\n✓ Room removed successfully!");
+                } else {
+                    System.out.println("\n✗ Room not found or could not be removed.");
+                }
+            } catch (Exception e) {
+                System.out.println("\n✗ Failed to remove room: " + e.getMessage());
+            }
+            pressEnterToContinue();
+        }
 
     private static void registerGuest() {
         System.out.println("\n╔════════════════════════════════════════╗");
