@@ -1,4 +1,4 @@
-package com.hotel;
+package com.hotel.Model;
 
 
 import java.time.LocalDate;
@@ -48,6 +48,10 @@ public class Room {
 
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public TreeMap<Integer, Booking> getBookingRegister() {
+        return bookingRegister;
     }
 
     public RoomType getRoomType() {

@@ -1,7 +1,7 @@
-package com.hotel;
+package com.hotel.Model;
 
 public class Guest {
-    //basic guest skelton for testing
+    //basic guest skeleton for testing
     private String name;
 
 

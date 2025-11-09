@@ -1,4 +1,4 @@
-package com.hotel;
+package com.hotel.Model;
 
 public enum RoomType {
     SINGLE,

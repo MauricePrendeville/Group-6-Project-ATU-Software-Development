@@ -1,5 +1,13 @@
 package com.hotel;
 
+import com.hotel.Model.Booking;
+import com.hotel.Model.Guest;
+import com.hotel.Model.Room;
+import com.hotel.Model.RoomType;
+import com.hotel.Service.BookingInterface;
+import com.hotel.Service.BookingRegister;
+import com.hotel.Service.RoomInventoryImpl;
+
 import java.time.LocalDate;
 
 
@@ -14,7 +22,7 @@ public class Main {
 
         Guest guest1 = new Guest("Jack");
         Guest guest2 = new Guest("Danny");
-        Room room1 = new Room(1,RoomType.SINGLE, true, 230 );
+        Room room1 = new Room(1, RoomType.SINGLE, true, 230 );
         Room room2 = new Room(2, RoomType.DOUBLE, true, 280 );
         Room room3 = new Room(3,RoomType.SINGLE, true, 230 );
         Room room4 = new Room(4,RoomType.SINGLE, true, 230 );
@@ -76,6 +84,8 @@ public class Main {
 
         BookingInterface bookingInterface = new BookingInterface();
         bookingInterface.getStayRequestDetails(roomInventory);
+
+        roomInventory.showAllBookings();
 
     }
 }

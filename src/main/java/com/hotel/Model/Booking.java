@@ -1,4 +1,4 @@
-package com.hotel;
+package com.hotel.Model;
 
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -66,6 +66,7 @@ public class Booking {
     public LocalDate getBookingDate() {
         return bookingDate;
     }
+
 
     public Guest getBookingGuest() {return bookingGuest;}
 

@@ -1,4 +1,7 @@
-package com.hotel;
+package com.hotel.Service;
+import com.hotel.Model.Booking;
+import com.hotel.Model.Room;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;

@@ -1,9 +1,13 @@
-package com.hotel;
+package com.hotel.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.hotel.Room;
-import com.hotel.RoomType;
+
+import com.hotel.Model.Booking;
+import com.hotel.Model.BookingStatus;
+import com.hotel.Model.Room;
+import com.hotel.Model.RoomType;
+
 /**
  * Implementation of Room Inventory Management.
  * This class provides methods to manage the collection of rooms,
@@ -173,5 +177,28 @@ public class RoomInventoryImpl {
     //}
     }
 
+    public void showAllBookings(){
+        for (Room room : rooms) {
+            room.showBookedDates(room);
+        }
 
+//            TreeMap<Integer, Booking> bookingRegister = room.getBookingRegister();
+//            System.out.println(room.getBookingRegister());
+//            System.out.println("Yup");
+//
+//            for (Booking booking : bookingRegister.values()){
+//                System.out.println(booking.getBookingID() + ": Arrival: " + booking.getArriveDate()
+//                        + " Departure: " + booking.getDepartDate()
+//                        + " Guest: " + booking.getBookingGuest().getName()
+//                        + " Room: " + booking.getBookingRoom().getRoomNumber());
+//            }
+////            for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()){
+////                System.out.println(entry.getKey() + ": Arrival: " + entry.getValue().getArriveDate()
+////                        + " Departure: " + entry.getValue().getDepartDate()
+////                        + " Guest: " + entry.getValue().getBookingGuest().getName()
+////                        + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
+////            }
+//        }
+
+    }
 }
