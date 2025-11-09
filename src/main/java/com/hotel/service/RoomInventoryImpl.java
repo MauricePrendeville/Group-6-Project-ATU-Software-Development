@@ -1,9 +1,13 @@
-package com.hotel.service;
+package com.hotel.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.hotel.model.Room;
-import com.hotel.model.RoomType;
+
+import com.hotel.Model.Booking;
+import com.hotel.Model.BookingStatus;
+import com.hotel.Model.Room;
+import com.hotel.Model.RoomType;
+
 /**
  * Implementation of Room Inventory Management.
  * This class provides methods to manage the collection of rooms,
@@ -66,8 +70,12 @@ public class RoomInventoryImpl {
      * Retrieves a list of all available rooms.
      * @return getAvailableRooms
      */
+    //double check this for loop. debugger suggested it. does it work? MP
     public List<Room> getAvailableRooms() {
-        availableRooms = rooms.stream().filter(Room::isAvailable).toList();        
+        for (Room room : availableRooms = rooms.stream().filter(Room::isAvailable).toList()) {
+
+        }
+
         return availableRooms;
     }
 
@@ -106,13 +114,91 @@ public class RoomInventoryImpl {
     }
 
     public int getBookedRooms() {
-       int availableRooms = rooms.stream().filter(Room::isAvailable).toList().size(
+        int availableRooms = rooms.stream().filter(Room::isAvailable).toList().size(
         );
         bookedRooms = rooms.size() - availableRooms;
         System.out.println("Total booked rooms: " + bookedRooms);
         return bookedRooms;
     }
+//-----------------------------Check availability and dates-------------------
 
-    
+    public RoomInventoryImpl() {
+    }
 
+    public void checkRoomAvailability (RoomType roomType){
+
+        List<Room> rooms1;
+        for (Room room : rooms){
+            if (room.getRoomType()==roomType){
+            System.out.println(room.getRoomNumber());
+            }
+        }
+
+//        rooms.stream()
+//                .filter(Room ->Room.getRoomType()==roomType)
+//                .forEach(Room -> System.out.println(Room.getRoomNumber()));
+        //for (Room room : rooms = rooms.stream().filter(RoomType::roomType).toList()) {
+
+
+        }
+
+    public void checkRoomAvailability (Booking booking, RoomType roomType){
+
+        System.out.println("Checking Room Availability..." + roomType);
+        List<Room> rooms1;
+        String roomTypeText = roomType.toString();
+
+        //for loop runs through list of all rooms in the hotel roomInventory rooms.
+        // It finds the correct room type first and then checks for date overlap.
+
+        for (Room room : rooms){
+            //System.out.println(room.getRoomType());
+            if (room.getRoomType()==roomType){
+                System.out.println("Possible room number: " + room.getRoomNumber()); //added output for testing MP
+                if(room.checkForBookingOverlap(booking, room))
+                   System.out.println("Booking Unavailable");
+                else {
+                    System.out.println("Booking Available");
+                    booking.setBookingStatus(BookingStatus.POSSIBLE); //update booking status at each phase of process
+                    booking.setBookingRoom(room);
+                    break; //the search will stop at the first room that is the correct type and has available dates that match the booking
+
+                }
+            }
+        }
+
+
+//        rooms.stream()
+//                .filter(Room -> Room.getRoomType() == roomTypeText)
+//                .forEach(Room -> System.out.println(Room.getRoomNumber()));
+//        //for (Room room : rooms = rooms.stream().filter(RoomType::roomType).toList()) {
+
+
+    //}
+    }
+
+    public void showAllBookings(){
+        for (Room room : rooms) {
+            room.showBookedDates(room);
+        }
+
+//            TreeMap<Integer, Booking> bookingRegister = room.getBookingRegister();
+//            System.out.println(room.getBookingRegister());
+//            System.out.println("Yup");
+//
+//            for (Booking booking : bookingRegister.values()){
+//                System.out.println(booking.getBookingID() + ": Arrival: " + booking.getArriveDate()
+//                        + " Departure: " + booking.getDepartDate()
+//                        + " Guest: " + booking.getBookingGuest().getName()
+//                        + " Room: " + booking.getBookingRoom().getRoomNumber());
+//            }
+////            for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()){
+////                System.out.println(entry.getKey() + ": Arrival: " + entry.getValue().getArriveDate()
+////                        + " Departure: " + entry.getValue().getDepartDate()
+////                        + " Guest: " + entry.getValue().getBookingGuest().getName()
+////                        + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
+////            }
+//        }
+
+    }
 }
