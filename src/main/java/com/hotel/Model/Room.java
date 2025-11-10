@@ -1,6 +1,8 @@
 package com.hotel.Model;
 
 
+import com.hotel.Service.BookingRegister;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -22,11 +24,9 @@ public class Room {
     private double pricePerNight; // room cost per night
 
     //Booking Register additions to Room (Maurice)
-    private TreeMap<Integer, Booking> bookingRegister;
     private int bookingID;
-    //private ArrayList<Room> roomList;
-    private ArrayList<LocalDate> bookedDates;
-
+    private BookingRegister bookingRegister;
+    private int roomBookingCount;
 
     public Room(int roomNumber, RoomType roomType, boolean available, double pricePerNight) {
         this.roomNumber = roomNumber;
@@ -36,9 +36,11 @@ public class Room {
 
         //extra attributes initialised for booking register functionality (Maurice)
         this.bookingID = 1;
-        this.bookingRegister = new TreeMap<>(); //treemap used to keep track of booking details
+        this.bookingRegister = new BookingRegister();
+        this.roomBookingCount = 0;
+
         //this.roomList = new ArrayList<>();
-        this.bookedDates = new ArrayList<>(); //array used to check availability of range of dates
+       // this.bookedDates = new ArrayList<>(); //array used to check availability of range of dates
     }
 
     // 🔹 Getters and Setters
@@ -50,9 +52,7 @@ public class Room {
         this.roomNumber = roomNumber;
     }
 
-    public TreeMap<Integer, Booking> getBookingRegister() {
-        return bookingRegister;
-    }
+    public BookingRegister getBookingRegister() { return bookingRegister; }
 
     public RoomType getRoomType() {
         return roomType;
@@ -78,6 +78,12 @@ public class Room {
         this.pricePerNight = pricePerNight;
     }
 
+    public int getRoomBookingCount() {
+        return roomBookingCount;
+    }
+
+    public int setNextRoomBookingCount() { return roomBookingCount++; }
+
     // 🔹 Utility Methods
     @Override
     public String toString() {
@@ -89,110 +95,4 @@ public class Room {
                 '}';
     }
 
-    //-------------//methods added for booking register functionality //----------mvn--------------------------
-    public void addBooking(Booking booking) {
-
-//        //TreeMap<Booking, Integer> bookingRegister = new TreeMap<>();
-        int nextBookingID = bookingID++;
-        System.out.println(booking.getBookingGuest().getName());
-        bookingRegister.put(nextBookingID, booking);
-        System.out.println("add booking" + nextBookingID);
-    }
-
-    public void showBookings() {
-        System.out.println("List of Bookings: ");
-        for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()) {
-            System.out.println(entry.getKey() + ": Arrival: " + entry.getValue().getArriveDate()
-                    + " Departure: " + entry.getValue().getDepartDate()
-                    + " Guest: " + entry.getValue().getBookingGuest().getName()
-                    + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
-
-        }
-    }
-
-    //add option to pass date to this method to get guests on a particular date
-    public void showGuests() {
-        System.out.println("List of Guests: ");
-        for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()) {
-            System.out.println(entry.getKey() + " Guest: " + entry.getValue().getBookingGuest().getName()
-                    + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
-        }
-    }
-
-//    public void showRooms() {
-//        ArrayList<Room> rooms = new ArrayList<>();
-//        rooms = roomList;
-//        for (Room room : rooms)
-//            System.out.println(room.getRoomNumber());
-//
-//    }
-
-    //use addDatesToRegister when the Booking is set to CONFIRMED
-    public void addDatesToRegister(Booking booking) {
-        LocalDate arrive = booking.getArriveDate();
-        LocalDate depart = booking.getDepartDate();
-
-        LocalDate addDate = arrive;
-        while (!addDate.isEqual(depart)) {
-            bookedDates.add(addDate);
-            addDate = addDate.plusDays(1);
-        }
-    }
-
-    //checkForBookingOverlap returns True if there is an overlap with an existing booking
-    public boolean checkForBookingOverlap(Booking booking, Room room) {
-        LocalDate arrive = booking.getArriveDate();
-        LocalDate depart = booking.getDepartDate();
-
-        ArrayList<LocalDate> potentialBookingDates = new ArrayList<>();
-        LocalDate addDate = arrive;
-        while (!addDate.isEqual(depart)) {
-            potentialBookingDates.add(addDate);
-            addDate = addDate.plusDays(1);
-        }
-        for (LocalDate checkDate : bookedDates) {
-            if (potentialBookingDates.contains(checkDate)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-    public void showBookedDates(Room room) {
-        for (LocalDate bookedDate : bookedDates) {
-            System.out.println("Room: " + room.getRoomNumber() + " Type: " + room.getRoomType() + " Date: " + bookedDate);
-        }
-
-    }
-
 }
-////skeleton class for testing
-//public class Room {
-//
-//    private String roomNumber;
-//    private String roomClass;
-//
-//
-//    public Room(String roomNumber, String roomClass) {
-//        this.roomNumber = roomNumber;
-//        this.roomClass = roomClass;
-//    }
-//
-//    public String getRoomNumber() {
-//        return roomNumber;
-//    }
-//
-//    public String getRoomClass() {
-//        return roomClass;
-//    }
-//
-//    public void setRoomNumber(String roomNumber) {
-//        this.roomNumber = roomNumber;
-//    }
-//
-//    public void setRoomClass(String roomClass) {
-//        this.roomClass = roomClass;
-//    }
-//}

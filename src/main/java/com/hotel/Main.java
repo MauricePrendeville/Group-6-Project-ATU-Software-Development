@@ -30,32 +30,43 @@ public class Main {
 
 
 
-        BookingRegister bookingRegister1 = new BookingRegister(LocalDate.of(2025, 1, 1));
+       // BookingRegister bookingRegister1 = new BookingRegister(LocalDate.of(2025, 1, 1));
 
-        bookingRegister1.addRoomToRegister(room1);
-        bookingRegister1.addRoomToRegister(room2);
+      //  bookingRegister1.addRoomToRegister(room1);
+       // bookingRegister1.addRoomToRegister(room2);
 
         Booking booking1 = new Booking(LocalDate.of(2025, 10, 27),
                 LocalDate.of(2025, 10, 31));
 
-        room1.addDatesToRegister(booking1);
+        room1.getBookingRegister().addDatesToRegister(booking1);
 
-        bookingRegister1.addDatesToRegister(booking1,room1);
-        bookingRegister1.showBookedDates(room1);
+        Booking booking5 = new Booking(LocalDate.of(2025, 11, 2),
+                LocalDate.of(2025, 11, 8));
+
+        room1.getBookingRegister().addDatesToRegister(booking5);
+        room1.setNextRoomBookingCount();
+
+        Booking booking6 = new Booking(LocalDate.of(2025, 11, 10),
+                LocalDate.of(2025, 11, 13));
+
+        room1.getBookingRegister().addDatesToRegister(booking5);
+        room1.setNextRoomBookingCount();
+       // room1.getBookingRegister().addDatesToRegister(booking1,room1);
+        room1.getBookingRegister().showBookedDates(room1);
 
 
         Booking booking2 = new Booking(LocalDate.of(2025, 10, 29),
                 LocalDate.of(2025, 10, 31));
-        room2.addDatesToRegister(booking2);
+        room2.getBookingRegister().addDatesToRegister(booking2);
 
         Booking booking3 = new Booking(LocalDate.of(2025, 10, 31),
                 LocalDate.of(2025, 11, 1), guest2, room2);
 
         Booking booking4 = new Booking(LocalDate.of(2025, 10, 31),
                 LocalDate.of(2025, 11, 1), guest2, room2);
-        room1.addDatesToRegister(booking4);
+        room1.getBookingRegister().addDatesToRegister(booking4);
 
-                 if(bookingRegister1.checkForBookingOverlap(booking2, room2))
+                 if(room2.getBookingRegister().checkForBookingOverlap(booking2, room2))
                     System.out.println("Booking Unavailable");
                     else
                         System.out.println("Booking Available");
