@@ -5,21 +5,7 @@ title Hotel Booking System - Class Diagram
 ' Packages (logical grouping)
 package "Core" {
   class HotelSystem {
-    - bookingManager: BookingManager
-    - roomManager: RoomManager
-    - userManager: UserManager
-    - paymentManager: PaymentManager
-    - currentUser: User
-    + initialize(): void
-    + login(email, password): boolean
-    + logout(): void
-    + registerGuest(name,email,phone): Guest
-    + createBooking(roomNumber, checkIn, checkOut, includeBreakfast): Booking
-    + createBooking(guestId, roomNumber, checkIn, checkOut, includeBreakfast): Booking
-    + cancelBooking(bookingId): void
-    + checkInGuest(bookingId): void
-    + checkOutGuest(bookingId): Payment
-    + generateReport(type): Report
+ 
   }
 
   class Main {
@@ -27,23 +13,6 @@ package "Core" {
   }
 }
 
-package "Managers" {
-  class BookingManager {
-    - bookings: Map<String,Booking>
-    + createBooking(guestId, roomNumber, checkIn, checkOut, totalPrice, includeBreakfast): Booking
-    + getBooking(id): Booking
-    + getBookingsByGuest(guestId): List<Booking>
-    + isRoomAvailable(roomNumber, checkIn, checkOut): boolean
-    + cancelBooking(bookingId): void
-  }
-
-  class RoomManager {
-    - rooms: Map<String,Room>
-    + addRoom(room): void
-    + getRoom(number): Room
-    + getAvailableRooms(checkIn, checkOut, type): List<Room>
-    + updateRoomStatus(roomNumber, status): void
-  }
 
   class UserManager {
     - users: Map<String,User>
@@ -87,21 +56,6 @@ package "Model" {
     + getBookingHistory(): List<String>
   }
 
-  class Booking {
-    - bookingId: String
-    - guestId: String
-    - roomNumber: String
-    - checkInDate: LocalDate
-    - checkOutDate: LocalDate
-    - totalPrice: double
-    - breakfastIncluded: boolean
-    - status: BookingStatus
-    - bookingDate: LocalDate
-    + getNumberOfNights(): long
-    + modifyBooking(newCheckIn,newCheckOut,newTotalPrice): void
-    + cancelBooking(): void
-  }
-
   abstract class Room {
     - roomNumber: String
     - roomType: RoomType
@@ -131,12 +85,6 @@ package "Model" {
     + generateInvoice(): String
   }
 
-  class Report {
-    - type: String
-    + addData(key, value): void
-    + generateContent(): String
-  }
-
   enum UserRole
   enum RoomType
   enum RoomStatus
@@ -146,17 +94,8 @@ package "Model" {
 }
 
 ' Relationships
-HotelSystem o-- BookingManager
-HotelSystem o-- RoomManager
-HotelSystem o-- UserManager
-HotelSystem o-- PaymentManager
 HotelSystem --> User : currentUser
 Main --> HotelSystem : uses
-
-BookingManager "1" *-- "*" Booking : manages
-RoomManager "1" *-- "*" Room : contains
-UserManager "1" *-- "*" User : maintains
-PaymentManager "1" *-- "*" Payment : manages
 
 Guest -- Booking : "0..*" : bookings
 Booking --> Room : references
@@ -174,3 +113,4 @@ User <|-- Cleaner
 User <|-- Guest
 
 @enduml
+
