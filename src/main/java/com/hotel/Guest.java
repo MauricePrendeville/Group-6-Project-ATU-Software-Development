@@ -8,9 +8,6 @@ import java.util.Objects;
 /**
  * Represents a guest (customer) in the hotel system.
  * Guests are managed by staff and may have booking history and a preferred payment method.
- *
- * Minimal implementation to satisfy the application usage.
- *
  * @author dev_amru
  * @version 1.0
  */
