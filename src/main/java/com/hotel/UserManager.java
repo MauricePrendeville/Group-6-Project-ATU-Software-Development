@@ -1,4 +1,4 @@
-package ie.atu.hotel.manager;
+package com.hotel.manager;
 
 import ie.atu.hotel.model.User;
 import ie.atu.hotel.model.UserRole;
@@ -217,3 +217,4 @@ public class UserManager {
         return emailIndex.containsKey(email.toLowerCase());
     }
 }
+
