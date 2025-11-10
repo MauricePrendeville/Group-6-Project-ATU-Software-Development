@@ -6,11 +6,6 @@ import java.util.List;
 /**
  * Represents reception staff in the hotel.
  * Can manage bookings, check in/out guests, and handle customer service.
-<<<<<<< HEAD
- *
-=======
- * 
->>>>>>> 6d7fa4412059838be5bee4afa2961ea473811a7f
  * @author dev_amru
  * @version 1.0
  */
