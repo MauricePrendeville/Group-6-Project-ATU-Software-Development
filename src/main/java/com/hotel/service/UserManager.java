@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
  * Manages all users in the hotel system.
  * Handles user authentication, registration, and CRUD operations.
  * Maintains indexes for efficient user lookup by ID and email.
- *
  * @author dev_Amru
  * @version 1.0
  */
@@ -36,19 +35,13 @@ public class UserManager {
 
     /**
      * Generates a unique user ID.
-     *
-     * @param prefix prefix for the ID (e.g., "G" for guest, "A" for admin)
-     * @return new user ID
-     */
+    */
     public String generateUserId(String prefix) {
         return prefix + (userCounter++);
     }
 
     /**
      * Adds a user to the system.
-     *
-     * @param user user to add
-     * @throws IllegalArgumentException if user is null or email already exists
      */
     public void addUser(User user) {
         if (user == null) {
@@ -67,9 +60,6 @@ public class UserManager {
 
     /**
      * Gets a user by ID.
-     *
-     * @param userId user ID
-     * @return the user or null if not found
      */
     public User getUser(String userId) {
         if (userId == null || userId.trim().isEmpty()) {
@@ -80,9 +70,6 @@ public class UserManager {
 
     /**
      * Gets a user by email.
-     *
-     * @param email user email
-     * @return the user or null if not found
      */
     public User getUserByEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
@@ -93,10 +80,6 @@ public class UserManager {
 
     /**
      * Authenticates a user with email and password.
-     *
-     * @param email user's email
-     * @param password user's password
-     * @return authenticated user or null if credentials invalid
      */
     public User authenticateUser(String email, String password) {
         if (email == null || password == null) {
@@ -112,9 +95,6 @@ public class UserManager {
 
     /**
      * Updates user information.
-     *
-     * @param user user with updated information
-     * @throws IllegalArgumentException if user not found
      */
     public void updateUser(User user) {
         if (user == null) {
@@ -141,9 +121,6 @@ public class UserManager {
 
     /**
      * Deletes a user from the system.
-     *
-     * @param userId user ID to delete
-     * @return true if user was deleted
      */
     public boolean deleteUser(String userId) {
         User user = users.remove(userId);
@@ -156,8 +133,6 @@ public class UserManager {
 
     /**
      * Gets all users in the system.
-     *
-     * @return list of all users
      */
     public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
@@ -165,9 +140,6 @@ public class UserManager {
 
     /**
      * Gets users by role.
-     *
-     * @param role user role to filter by
-     * @return list of users with the specified role
      */
     public List<User> getUsersByRole(UserRole role) {
         if (role == null) {
@@ -180,9 +152,6 @@ public class UserManager {
 
     /**
      * Searches users by name (case-insensitive partial match).
-     *
-     * @param searchTerm search term
-     * @return list of matching users
      */
     public List<User> searchUsersByName(String searchTerm) {
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
@@ -197,8 +166,6 @@ public class UserManager {
 
     /**
      * Gets total user count.
-     *
-     * @return number of users
      */
     public int getTotalUserCount() {
         return users.size();
@@ -206,9 +173,6 @@ public class UserManager {
 
     /**
      * Checks if email is already registered.
-     *
-     * @param email email to check
-     * @return true if email exists
      */
     public boolean emailExists(String email) {
         if (email == null) {
@@ -217,5 +181,6 @@ public class UserManager {
         return emailIndex.containsKey(email.toLowerCase());
     }
 }
+
 
 
