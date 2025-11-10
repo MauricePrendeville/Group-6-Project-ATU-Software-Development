@@ -1,12 +1,5 @@
 package com.hotel;
 
-/**
- * Represents a manager in the hotel.
- * Can generate reports and oversee operations.
- *
- * @author dev_amru
- * @version 1.0
- */
 public class Manager extends User {
     private String department;
 
