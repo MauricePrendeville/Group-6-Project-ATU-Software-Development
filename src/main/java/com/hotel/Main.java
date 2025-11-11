@@ -19,9 +19,8 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to the Overlook Hotel System");
 
-
-        Guest guest1 = new Guest("Jack");
-        Guest guest2 = new Guest("Danny");
+        Guest guest1 = new Guest("ab123","Jack Nicholson", "jack.nicholson@gmail.com", "01 123456", "JacksPassword");
+        Guest guest2 = new Guest("ab124", "Daniel Craig", "daniel.craig@gmail.com", "01 234567", "DanielsPassword");
         Room room1 = new Room(1, RoomType.SINGLE, true, 230 );
         Room room2 = new Room(2, RoomType.DOUBLE, true, 280 );
         Room room3 = new Room(3,RoomType.SINGLE, true, 230 );

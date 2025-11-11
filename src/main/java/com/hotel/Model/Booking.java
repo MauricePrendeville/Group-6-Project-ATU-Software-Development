@@ -22,7 +22,7 @@ public class Booking {
         this.arriveDate = arriveDate;
         this.departDate = departDate;
         this.bookingDate = LocalDate.now();
-        this.bookingGuest = new Guest("Wendy");
+        this.bookingGuest = new Guest("ab125", "Wendy Williams", "wendy.williams@gmail.com", "01 345678", "WendysPassword");
         this.bookingRoom = null;
         this.bookingStatus = BookingStatus.UNCONFIRMED;
     }
