@@ -128,7 +128,7 @@ public class RoomInventoryImpl {
 
     public void checkRoomAvailability (RoomType roomType){
 
-        List<Room> rooms1;
+       // List<Room> rooms1;
         for (Room room : rooms){
             if (room.getRoomType()==roomType){
             System.out.println(room.getRoomNumber());
@@ -146,8 +146,8 @@ public class RoomInventoryImpl {
     public void checkRoomAvailability (Booking booking, RoomType roomType){
 
         System.out.println("Checking Room Availability..." + roomType);
-        List<Room> rooms1;
-        String roomTypeText = roomType.toString();
+//        List<Room> rooms1;
+//        String roomTypeText = roomType.toString();
 
         //for loop runs through list of all rooms in the hotel roomInventory rooms.
         // It finds the correct room type first and then checks for date overlap.
