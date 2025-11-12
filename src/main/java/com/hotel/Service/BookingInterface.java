@@ -27,7 +27,8 @@ public class BookingInterface {
             return null;  // Return null for invalid dates
         }
     }
-
+//getValidDate in this mode confirms that the date is a real valid date.
+// There should be something added to make sure it is a date today or in the future perhaps.
     public LocalDate getValidDate(){
         LocalDate candidateDate = null;
         Scanner scanning = new Scanner(System.in);

@@ -177,13 +177,10 @@ public class RoomInventoryImpl {
         }
 
 
-//        rooms.stream()
-//                .filter(Room -> Room.getRoomType() == roomTypeText)
-//                .forEach(Room -> System.out.println(Room.getRoomNumber()));
-//        //for (Room room : rooms = rooms.stream().filter(RoomType::roomType).toList()) {
 
 
-    //}
+
+
     }
 
     public void showAllBookings(){
