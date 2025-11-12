@@ -89,10 +89,17 @@ public class BookingInterface {
        LocalDate departDate = getValidDate(arriveDate);
 
 
-
-       System.out.println("Enter Name: ");
-       String guestName = scanning.next();
-       Guest guest = new Guest(guestName);
+        System.out.println("Enter User ID: ");
+        String guestID = scanning.next();
+        System.out.println("Enter Name: ");
+        String guestName = scanning.next();
+        System.out.println("Enter Email: ");
+        String guestEmail = scanning.next();
+        System.out.println("Enter Phone: ");
+        String guestPhone = scanning.next();
+        System.out.println("Enter Password: ");
+        String guestPassword = scanning.next();
+       Guest guest = new Guest(guestID, guestName, guestEmail, guestPhone, guestPassword);
        RoomType roomType = RoomType.SINGLE;
 
        System.out.println("Select Room Type: Single (press 1), Double (press 2), Deluxe (press 3)");

@@ -1,12 +1,12 @@
-package com.hotel;
+package com.hotel.Model;
 
-
+import com.hotel.Model.PaymentMethod;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-public class Guest extends User {
+public class Guest extends com.hotel.User {
 	private List<String> bookingHistory;
 	private boolean returningGuest;
 	private PaymentMethod paymentMethod;
@@ -14,7 +14,7 @@ public class Guest extends User {
 	public Guest(String userId, String name, String email, String phone, String password) {
 		// Guests are managed by staff and may not have a usable password for login.
 		// Ensure a non-empty password is passed to the User constructor.
-		super(userId, name, email, phone, (password == null || password.trim().isEmpty()) ? ("guest-" + userId) : password, UserRole.GUEST);
+		super(userId, name, email, phone, (password == null || password.trim().isEmpty()) ? ("guest-" + userId) : password, com.hotel.UserRole.GUEST);
 		this.bookingHistory = new ArrayList<>();
 		this.returningGuest = false;
 		this.paymentMethod = null;
