@@ -1,6 +1,7 @@
 package com.hotel.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.hotel.Model.Booking;
@@ -127,7 +128,7 @@ public class RoomInventoryImpl {
 
     public void checkRoomAvailability (RoomType roomType){
 
-        List<Room> rooms1;
+       // List<Room> rooms1;
         for (Room room : rooms){
             if (room.getRoomType()==roomType){
             System.out.println(room.getRoomNumber());
@@ -145,22 +146,30 @@ public class RoomInventoryImpl {
     public void checkRoomAvailability (Booking booking, RoomType roomType){
 
         System.out.println("Checking Room Availability..." + roomType);
-        List<Room> rooms1;
-        String roomTypeText = roomType.toString();
+//        List<Room> rooms1;
+//        String roomTypeText = roomType.toString();
 
         //for loop runs through list of all rooms in the hotel roomInventory rooms.
         // It finds the correct room type first and then checks for date overlap.
+        //To make sure that we do not overuse any one room, the rooms are ordered by their booking count descending
+        // and then by their room number ascending
 
-        for (Room room : rooms){
+        List<Room> sortedRoomList = new ArrayList<>(rooms);
+        sortedRoomList.sort(Comparator.comparing(Room::getRoomBookingCount)
+                .thenComparing(Room::getRoomNumber).reversed());
+
+
+        for (Room room : sortedRoomList){
             //System.out.println(room.getRoomType());
             if (room.getRoomType()==roomType){
                 System.out.println("Possible room number: " + room.getRoomNumber()); //added output for testing MP
-                if(room.checkForBookingOverlap(booking, room))
+                if(room.getBookingRegister().checkForBookingOverlap(booking, room))
                    System.out.println("Booking Unavailable");
                 else {
                     System.out.println("Booking Available");
                     booking.setBookingStatus(BookingStatus.POSSIBLE); //update booking status at each phase of process
                     booking.setBookingRoom(room);
+                    room.setNextRoomBookingCount();
                     break; //the search will stop at the first room that is the correct type and has available dates that match the booking
 
                 }
@@ -179,7 +188,7 @@ public class RoomInventoryImpl {
 
     public void showAllBookings(){
         for (Room room : rooms) {
-            room.showBookedDates(room);
+            room.getBookingRegister().showBookedDates(room);
         }
 
 //            TreeMap<Integer, Booking> bookingRegister = room.getBookingRegister();
