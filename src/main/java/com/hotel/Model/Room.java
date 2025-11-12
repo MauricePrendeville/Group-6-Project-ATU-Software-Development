@@ -35,6 +35,8 @@ public class Room {
         this.pricePerNight = pricePerNight;
 
         //extra attributes initialised for booking register functionality (Maurice)
+        //the methods to use these attributes have been added into the BookingRegister class
+        //The BookingRegister objects contain the booking details for one room each
         this.bookingID = 1;
         this.bookingRegister = new BookingRegister();
         this.roomBookingCount = 0;

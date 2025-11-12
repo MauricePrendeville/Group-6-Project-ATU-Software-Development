@@ -55,7 +55,7 @@ public class BookingRegister {
 
     }
 
-
+    //this method adds the booking to the booking register for this room. The bookingID number is also added
     public void addBooking(Booking booking) {
 
         System.out.println(booking.getBookingGuest().getName());
