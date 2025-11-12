@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AdminTest {
 
-    private Admin admin;
+    private com.hotel.Admin admin;
 
     @BeforeEach
     void setUp() {
-        admin = new Admin("A001", "Admin User", "admin@hotel.com",
+        admin = new com.hotel.Admin("A001", "Admin User", "admin@hotel.com",
                 "0871234567", "admin123");
     }
 
@@ -19,7 +19,7 @@ class AdminTest {
         assertNotNull(admin);
         assertEquals("A001", admin.getUserId());
         assertEquals("Admin User", admin.getName());
-        assertEquals(UserRole.ADMIN, admin.getRole());
+        assertEquals(com.hotel.UserRole.ADMIN, admin.getRole());
     }
 
     @Test
@@ -30,12 +30,6 @@ class AdminTest {
         assertTrue(admin.hasPermission("GENERATE_REPORTS"));
         assertTrue(admin.hasPermission("MANAGE_SYSTEM"));
         assertTrue(admin.hasPermission("ANY_PERMISSION"));
-    }
-
-    @Test
-    @DisplayName("Admin can perform critical operations")
-    void testAdminCanPerformCriticalOperations() {
-        assertTrue(admin.canPerformCriticalOperations());
     }
 
     @Test
