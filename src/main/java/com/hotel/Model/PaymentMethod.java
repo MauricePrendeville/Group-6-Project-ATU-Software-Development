@@ -8,6 +8,7 @@ public enum PaymentMethod {
     CASH,
     CREDIT_CARD,
     DEBIT_CARD,
+    ONLINE_BANKING,
     MOBILE_PAYMENT;
 
     @Override
