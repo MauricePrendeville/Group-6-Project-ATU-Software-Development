@@ -9,6 +9,15 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+* This class is used to keep track of all Bookings for an individual Room
+*
+* This class has a method to checkForBookingOverlap to avoid rooms being double booked.
+ * Also method for addDatesToRegister that will convert an arrive and depart date into
+ * a list of dates to add to the bookingRegister TreeMap
+ * Each BookingRegister object is associated with a single Room*
+
+ */
 
 public class BookingRegister {
 
@@ -16,13 +25,23 @@ public class BookingRegister {
     private ArrayList<Room> roomList;
     private ArrayList<LocalDate> bookedDates;
 
+
+    /** BookingRegister constructor
+     * A BookingRegister object is created for each Room.
+     * bookingRegister TreeMap contains the list of Booking objects associated with the Room.
+     * bookDates ArrayList is used to convert the arrive and depart dates into a list to help check availability.
+     */
     public BookingRegister() {
         this.bookingRegister = new TreeMap<>(); //treemap used to keep track of booking details
         this.roomList = new ArrayList<>();
         this.bookedDates = new ArrayList<>(); //array used to check availability of range of dates
     }
 
-
+    /**
+     * getFormattedDate puts dates in a pleasant readable format
+     * @param date accepts date
+     * @return date formatted for readability
+     */
     public String getFormattedDate(LocalDate date){
         return date.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
     }
@@ -97,6 +116,14 @@ public class BookingRegister {
         }
     }
 
+    /**
+     * checkForBookingOverlap This method creates a list of dates from arrive date
+     * to the day before depart. It then cycles through the existing booking dates and
+     * checks to see if any of the potential dates matches an existing booking date.
+     * @param booking the booking object. data including the arrive and depart dates
+     * @param room the room object. not necessary anymore!
+     * @return true if there is an overlap with an existing booking. false if there is no overlap.
+     */
     //checkForBookingOverlap returns True if there is an overlap with an existing booking
     public boolean checkForBookingOverlap(Booking booking, Room room) {
         LocalDate arrive = booking.getArriveDate();
@@ -116,6 +143,11 @@ public class BookingRegister {
         return false;
     }
 
+    /**
+     * showBookedDates a method to show the full list of booked dates for a given Room.
+     * It prints a formatted list.
+     * @param room the Room in question
+     */
     public void showBookedDates(Room room) {
         for (LocalDate bookedDate : bookedDates) {
             System.out.println("Room: " + room.getRoomNumber() + " Type: " + room.getRoomType() + " Date: " + bookedDate);

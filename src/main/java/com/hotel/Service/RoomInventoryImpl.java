@@ -143,6 +143,17 @@ public class RoomInventoryImpl {
 
         }
 
+    /**
+     * checkRoomAvailability - this method searches for an available room for the guest.
+     * It first takes the list of all the Rooms and orders them by the roomBookingCount and then by RoomNumber (reversed).
+     * The reason for reordering the Rooms is to avoid using one Room too much.
+     * The method then checks each Room that matches the roomType selected and calls checkForBookingOverlap to see if the
+     * Room is available on the Guest's selected dates.
+     * The search loop breaks when an available room is found or if no room is available.
+      * @param booking the booking object that contains the arrive and depart dates
+     * @param roomType the type of room the guest is looking to book
+     *
+     */
     public void checkRoomAvailability (Booking booking, RoomType roomType){
 
         System.out.println("Checking Room Availability..." + roomType);
@@ -183,6 +194,9 @@ public class RoomInventoryImpl {
 
     }
 
+    /**
+     * showAllBookings loops through each Room and calls the showBookedDates for each of them
+     */
     public void showAllBookings(){
         for (Room room : rooms) {
             room.getBookingRegister().showBookedDates(room);

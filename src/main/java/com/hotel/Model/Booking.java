@@ -3,6 +3,13 @@ package com.hotel.Model;
 import java.time.LocalDate;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * This class is used to keep track of individual Bookings for an individual Room
+ * It contains the base information for a booking the arriveDate, the departDate and the bookingID
+ * It also contains the objects Guest, Room, and BookingStatus
+ */
+
 public class Booking {
 
     private static AtomicInteger bookingIDCounter = new AtomicInteger(0);
@@ -16,13 +23,17 @@ public class Booking {
     private BookingStatus bookingStatus;
     //need to add price and price calculator for this class. get price from Room
 
-
+    /**
+     * The Constructor for Booking object
+     * @param arriveDate the arrival date
+     * @param departDate the depart date
+     */
     public Booking(LocalDate arriveDate, LocalDate departDate) {
         this.bookingID = getNext();
         this.arriveDate = arriveDate;
         this.departDate = departDate;
         this.bookingDate = LocalDate.now();
-        this.bookingGuest = new Guest("ab125", "Wendy Williams", "wendy.williams@gmail.com", "01 345678", "WendysPassword");
+        this.bookingGuest = new Guest("ab125", "Wendy Torrance", "wendy.torrance@shriekmail.com", "01 345678", "WendysPassword");
         this.bookingRoom = null;
         this.bookingStatus = BookingStatus.UNCONFIRMED;
     }
