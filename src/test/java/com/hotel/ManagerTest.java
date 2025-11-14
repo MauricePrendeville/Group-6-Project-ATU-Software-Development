@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ManagerTest {
 
-    private Manager manager;
+    private com.hotel.Manager manager;
 
     @BeforeEach
     void setUp() {
-        manager = new Manager("M001", "Jane Manager", "jane@hotel.com",
+        manager = new com.hotel.Manager("M001", "Jane Manager", "jane@hotel.com",
                 "0871234567", "pass123", "Operations");
     }
 
@@ -21,14 +21,14 @@ class ManagerTest {
         assertEquals("M001", manager.getUserId());
         assertEquals("Jane Manager", manager.getName());
         assertEquals("Operations", manager.getDepartment());
-        assertEquals(UserRole.MANAGER, manager.getRole());
+        assertEquals(com.hotel.UserRole.MANAGER, manager.getRole());
     }
 
     @Test
     @DisplayName("Constructor should throw exception for null department")
     void testConstructorNullDepartment() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new Manager("M002", "Test Manager", "test@hotel.com",
+            new com.hotel.Manager("M002", "Test Manager", "test@hotel.com",
                     "0870000000", "pass", null);
         });
     }

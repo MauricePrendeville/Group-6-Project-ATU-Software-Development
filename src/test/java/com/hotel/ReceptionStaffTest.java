@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReceptionStaffTest {
 
-    private ReceptionStaff reception;
+    private com.hotel.ReceptionStaff reception;
 
     @BeforeEach
     void setUp() {
-        reception = new ReceptionStaff("R001", "John Reception", "john@hotel.com",
+        reception = new com.hotel.ReceptionStaff("R001", "John Reception", "john@hotel.com",
                 "0871234567", "pass123");
     }
 
@@ -19,7 +19,7 @@ class ReceptionStaffTest {
         assertNotNull(reception);
         assertEquals("R001", reception.getUserId());
         assertEquals("John Reception", reception.getName());
-        assertEquals(UserRole.RECEPTION_STAFF, reception.getRole());
+        assertEquals(com.hotel.UserRole.RECEPTION_STAFF, reception.getRole());
     }
 
     @Test
