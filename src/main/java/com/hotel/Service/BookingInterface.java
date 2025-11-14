@@ -17,6 +17,13 @@ public class BookingInterface {
     public BookingInterface() {
     }
 
+    /**
+     * this method turns the user input of three integers into a LocalDate date object.
+     * @param year the year of the potential booking
+     * @param month the month of the potential booking
+     * @param day the day of the potential booking
+     * @return LocalDate object which is the parsed date.
+     */
     public static LocalDate parseDate(int year, int month, int day) {
         String dateString = String.format("%04d-%02d-%02d", year, month, day);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -27,8 +34,13 @@ public class BookingInterface {
             return null;  // Return null for invalid dates
         }
     }
-//getValidDate in this mode confirms that the date is a real valid date.
-// There should be something added to make sure it is a date today or in the future perhaps.
+
+    /**
+     * getValidDate in this mode confirms that the date is a real valid date.
+     * There should be something added to make sure it is a date today or in the future perhaps.
+     * @return candidateDate the date that is being tested for validity
+     */
+//
     public LocalDate getValidDate(){
         LocalDate candidateDate = null;
         Scanner scanning = new Scanner(System.in);
@@ -49,7 +61,13 @@ public class BookingInterface {
 
         return candidateDate;
     }
-//extra getValidDate method to check that the depart date is after the arrive date
+    /**
+     * getValidDate in this mode confirms that the departDate is after the arriveDate.
+     * It also confirms that the date is a real valid date.
+     * There should be something added to make sure it is a date today or in the future perhaps.
+     * @return candidateDate the date that is being tested for validity
+     */
+    //extra getValidDate method to check that the depart date is after the arrive date
     public LocalDate getValidDate(LocalDate arriveDate){
         LocalDate candidateDate = null;
         Scanner scanning = new Scanner(System.in);
