@@ -1,8 +1,8 @@
 package com.hotel.Service;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.hotel.Model.Booking;
 import com.hotel.Model.BookingStatus;
@@ -73,10 +73,9 @@ public class RoomInventoryImpl {
      */
     //double check this for loop. debugger suggested it. does it work? MP
     public List<Room> getAvailableRooms() {
-        for (Room room : availableRooms = rooms.stream().filter(Room::isAvailable).toList()) {
-            
-        }
-
+        availableRooms = rooms.stream()
+                .filter(Room::isAvailable)
+                .collect(Collectors.toList());
         return availableRooms;
     }
 
@@ -115,9 +114,8 @@ public class RoomInventoryImpl {
     }
 
     public int getBookedRooms() {
-        int availableRooms = rooms.stream().filter(Room::isAvailable).toList().size(
-        );
-        bookedRooms = rooms.size() - availableRooms;
+        int availableCount = (int) rooms.stream().filter(Room::isAvailable).count();
+        bookedRooms = rooms.size() - availableCount;
         System.out.println("Total booked rooms: " + bookedRooms);
         return bookedRooms;
     }
@@ -128,10 +126,10 @@ public class RoomInventoryImpl {
 
     public void checkRoomAvailability (RoomType roomType){
 
-       // List<Room> rooms1;
+        // List<Room> rooms1;
         for (Room room : rooms){
             if (room.getRoomType()==roomType){
-            System.out.println(room.getRoomNumber());
+                System.out.println(room.getRoomNumber());
             }
         }
 
@@ -141,7 +139,7 @@ public class RoomInventoryImpl {
         //for (Room room : rooms = rooms.stream().filter(RoomType::roomType).toList()) {
 
 
-        }
+    }
 
     /**
      * checkRoomAvailability - this method searches for an available room for the guest.
@@ -175,7 +173,7 @@ public class RoomInventoryImpl {
             if (room.getRoomType()==roomType){
                 System.out.println("Possible room number: " + room.getRoomNumber()); //added output for testing MP
                 if(room.getBookingRegister().checkForBookingOverlap(booking, room))
-                   System.out.println("Booking Unavailable");
+                    System.out.println("Booking Unavailable");
                 else {
                     System.out.println("Booking Available");
                     booking.setBookingStatus(BookingStatus.POSSIBLE); //update booking status at each phase of process
@@ -187,11 +185,6 @@ public class RoomInventoryImpl {
             }
         }
 
-
-
-
-
-
     }
 
     /**
@@ -201,24 +194,5 @@ public class RoomInventoryImpl {
         for (Room room : rooms) {
             room.getBookingRegister().showBookedDates(room);
         }
-
-//            TreeMap<Integer, Booking> bookingRegister = room.getBookingRegister();
-//            System.out.println(room.getBookingRegister());
-//            System.out.println("Yup");
-//
-//            for (Booking booking : bookingRegister.values()){
-//                System.out.println(booking.getBookingID() + ": Arrival: " + booking.getArriveDate()
-//                        + " Departure: " + booking.getDepartDate()
-//                        + " Guest: " + booking.getBookingGuest().getName()
-//                        + " Room: " + booking.getBookingRoom().getRoomNumber());
-//            }
-////            for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()){
-////                System.out.println(entry.getKey() + ": Arrival: " + entry.getValue().getArriveDate()
-////                        + " Departure: " + entry.getValue().getDepartDate()
-////                        + " Guest: " + entry.getValue().getBookingGuest().getName()
-////                        + " Room: " + entry.getValue().getBookingRoom().getRoomNumber());
-////            }
-//        }
-
     }
 }
