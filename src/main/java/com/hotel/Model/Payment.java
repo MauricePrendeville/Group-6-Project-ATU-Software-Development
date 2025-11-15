@@ -1,6 +1,10 @@
 package com.hotel.Model;
 
+// File: `src/main/java/com/hotel/Model/Payment.java`
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -9,11 +13,31 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Handles payment processing, validation, and tracking for bookings.
  * Each payment is associated with a booking and guest.
  */
-
 public class Payment {
 
     // Static counter for generating unique payment IDs
     private static AtomicInteger paymentCounter = new AtomicInteger(1000);
+
+    // Simple line-item support so facilities can attach charges to a Payment
+    public static class LineItem {
+        private final String description;
+        private final double amount;
+
+        public LineItem(String description, double amount) {
+            this.description = description;
+            this.amount = amount;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public double getAmount() {
+            return amount;
+        }
+    }
+
+    private final List<LineItem> lineItems = new ArrayList<>();
 
     private String paymentId;
     private int bookingId;
@@ -111,6 +135,38 @@ public class Payment {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("Guest name cannot be null or empty");
         }
+    }
+
+    /**
+     * Records a facility or other charge as a line item on this payment.
+     * The amount is added to the running payment amount so getAmount() reflects the full total.
+     *
+     * @param description short description for the line item
+     * @param chargeAmount positive charge amount
+     */
+    public void addCharge(String description, double chargeAmount) {
+        if (description == null || description.trim().isEmpty()) {
+            throw new IllegalArgumentException("Line item description cannot be null or empty");
+        }
+        if (Double.isNaN(chargeAmount) || Double.isInfinite(chargeAmount) || chargeAmount < 0) {
+            throw new IllegalArgumentException("Charge amount must be a valid non-negative number");
+        }
+        lineItems.add(new LineItem(description, chargeAmount));
+        this.amount += chargeAmount;
+    }
+
+    /**
+     * Returns an unmodifiable list of recorded line items.
+     */
+    public List<LineItem> getCharges() {
+        return Collections.unmodifiableList(lineItems);
+    }
+
+    /**
+     * Returns the sum of recorded line items (does not include the original amount if it was set separately).
+     */
+    public double getChargesTotal() {
+        return lineItems.stream().mapToDouble(LineItem::getAmount).sum();
     }
 
     /**
@@ -312,6 +368,12 @@ public class Payment {
         }
         if (transactionReference != null) {
             summary.append(String.format("Transaction:   %s\n", transactionReference));
+        }
+        if (!lineItems.isEmpty()) {
+            summary.append("Line Items:\n");
+            for (LineItem li : lineItems) {
+                summary.append(String.format("  - %s : €%.2f\n", li.getDescription(), li.getAmount()));
+            }
         }
         summary.append("====================================\n");
         return summary.toString();
