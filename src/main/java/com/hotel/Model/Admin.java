@@ -7,9 +7,9 @@ package com.hotel;
  * @author dev_amru
  * @version 1.0
  */
-public class Admin extends User {
+public class Admin extends com.hotel.User {
 	public Admin(String userId, String name, String email, String phone, String password) {
-		super(userId, name, email, phone, password, UserRole.ADMIN);
+		super(userId, name, email, phone, password, com.hotel.UserRole.ADMIN);
 	}
 
 	@Override
