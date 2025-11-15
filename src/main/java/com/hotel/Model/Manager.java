@@ -1,11 +1,11 @@
 package com.hotel;
 
-public class Manager extends User {
+public class Manager extends com.hotel.User {
     private String department;
 
     public Manager(String userId, String name, String email, String phone,
                    String password, String department) {
-        super(userId, name, email, phone, password, UserRole.MANAGER);
+        super(userId, name, email, phone, password, com.hotel.UserRole.MANAGER);
         validateInput(department, "Department");
         this.department = department;
     }

@@ -10,7 +10,7 @@ import java.util.List;
  * @author dev_amru
  * @version 1.0
  */
-public class Cleaner extends User {
+public class Cleaner extends com.hotel.User {
     private List<String> assignedRooms;
 
     public Cleaner(String userId, String name, String email, String phone, String password) {

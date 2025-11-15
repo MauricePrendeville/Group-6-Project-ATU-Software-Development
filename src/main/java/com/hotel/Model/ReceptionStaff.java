@@ -3,11 +3,11 @@ package com.hotel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReceptionStaff extends User {
+public class ReceptionStaff extends com.hotel.User {
     private List<String> assignedShifts;
 
     public ReceptionStaff(String userId, String name, String email, String phone, String password) {
-        super(userId, name, email, phone, password, UserRole.RECEPTION_STAFF);
+        super(userId, name, email, phone, password, com.hotel.UserRole.RECEPTION_STAFF);
         this.assignedShifts = new ArrayList<>();
     }
 
