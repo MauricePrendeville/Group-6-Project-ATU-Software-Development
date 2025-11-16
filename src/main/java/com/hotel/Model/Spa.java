@@ -12,6 +12,7 @@ public class Spa extends Facilities {
     public double getCharge() {
         return getBaseCost() * getQuantity();
     }
+}
 
     public int getQuantity() {
         return quantity;

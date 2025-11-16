@@ -1,15 +1,16 @@
 package com.hotel;
 
+import com.hotel.Model.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CleanerTest {
 
-    private com.hotel.Cleaner cleaner;
+    private Cleaner cleaner;
 
     @BeforeEach
     void setUp() {
-        cleaner = new com.hotel.Cleaner("C001", "Mary Cleaner", "mary@hotel.com",
+        cleaner = new Cleaner("C001", "Mary Cleaner", "mary@hotel.com",
                 "0871234567", "pass123");
     }
 
@@ -19,7 +20,7 @@ class CleanerTest {
         assertNotNull(cleaner);
         assertEquals("C001", cleaner.getUserId());
         assertEquals("Mary Cleaner", cleaner.getName());
-        assertEquals(com.hotel.UserRole.CLEANER, cleaner.getRole());
+        assertEquals(UserRole.CLEANER, cleaner.getRole());
     }
 
     @Test

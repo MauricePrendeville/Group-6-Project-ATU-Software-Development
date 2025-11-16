@@ -1,7 +1,7 @@
 package com.hotel.Service;
 
-import com.hotel.User;
-import com.hotel.UserRole;
+import com.hotel.Model.User;
+import com.hotel.Model.UserRole;
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -1,4 +1,5 @@
 package com.hotel.Model;
+
 import java.time.LocalDateTime;
 
 public abstract class Facilities {

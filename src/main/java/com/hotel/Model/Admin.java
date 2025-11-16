@@ -1,4 +1,4 @@
-package com.hotel;
+package com.hotel.Model;
 
 /**
  * Represents an administrator user in the hotel system.
@@ -7,9 +7,9 @@ package com.hotel;
  * @author dev_amru
  * @version 1.0
  */
-public class Admin extends com.hotel.User {
+public class Admin extends User {
 	public Admin(String userId, String name, String email, String phone, String password) {
-		super(userId, name, email, phone, password, com.hotel.UserRole.ADMIN);
+		super(userId, name, email, phone, password, UserRole.ADMIN);
 	}
 
 	@Override
