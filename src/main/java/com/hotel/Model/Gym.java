@@ -1,13 +1,12 @@
 package com.hotel.Model;
 
-    public class Gym extends Facilities {
-        public Gym(String description, double baseCost) {
-            super(description, baseCost);
-        }
+public class Gym extends Facilities {
+    public Gym(String description, double baseCost) {
+        super(description, baseCost);
+    }
 
-        @Override
-        public double getCharge() {
-            return getBaseCost();
-        }
-
+    @Override
+    public double getCharge() {
+        return getBaseCost();
+    }
 }

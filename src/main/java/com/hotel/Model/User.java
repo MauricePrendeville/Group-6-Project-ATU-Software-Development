@@ -1,4 +1,6 @@
-package com.hotel;
+package com.hotel.Model;
+
+import com.hotel.Model.UserRole;
 
 import java.util.Objects;
 

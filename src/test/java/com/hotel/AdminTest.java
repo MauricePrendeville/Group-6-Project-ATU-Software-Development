@@ -1,15 +1,16 @@
 package com.hotel;
 
+import com.hotel.Model.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AdminTest {
 
-    private com.hotel.Admin admin;
+    private Admin admin;
 
     @BeforeEach
     void setUp() {
-        admin = new com.hotel.Admin("A001", "Admin User", "admin@hotel.com",
+        admin = new Admin("A001", "Admin User", "admin@hotel.com",
                 "0871234567", "admin123");
     }
 
@@ -19,7 +20,7 @@ class AdminTest {
         assertNotNull(admin);
         assertEquals("A001", admin.getUserId());
         assertEquals("Admin User", admin.getName());
-        assertEquals(com.hotel.UserRole.ADMIN, admin.getRole());
+        assertEquals(UserRole.ADMIN, admin.getRole());
     }
 
     @Test

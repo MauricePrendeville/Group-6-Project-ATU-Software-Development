@@ -3,11 +3,6 @@ package com.hotel.Model;
 
 import com.hotel.Service.BookingRegister;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-
 /**
  * Represents a single room in the hotel.
  * Each Room object holds basic details such as
