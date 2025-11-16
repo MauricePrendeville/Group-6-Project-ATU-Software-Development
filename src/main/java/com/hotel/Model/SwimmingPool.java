@@ -22,3 +22,4 @@ public class SwimmingPool extends Facilities {
         return quantity;
     }
 }
+
