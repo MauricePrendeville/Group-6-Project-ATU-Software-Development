@@ -1,12 +1,11 @@
 package com.hotel;
 
 import java.util.Objects;
+import com.hotel.UserRole;
 
 /**
  * Abstract base class representing a user in the hotel booking system.
- * This class provides common attributes and methods for all user types.
- * @author dev_amru
- * @version 1.0
+ * Provides common attributes and validation for all user types.
  */
 public abstract class User {
     private String userId;
@@ -32,18 +31,12 @@ public abstract class User {
         this.role = role;
     }
 
-    /**
-     * Validates that a string input is not null or empty.
-     */
     protected void validateInput(String input, String fieldName) {
         if (input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException(fieldName + " cannot be null or empty");
         }
     }
 
-    /**
-     Validates email format.
-     */
     protected void validateEmail(String email) {
         validateInput(email, "Email");
         if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
@@ -51,15 +44,8 @@ public abstract class User {
         }
     }
 
-    /**
-     Abstract method to get user permissions.
-     Each user type implements their specific permissions.
-   */
     public abstract String getPermissions();
 
-    /**
-     * Checks if user has a specific permission.
-     */
     public abstract boolean hasPermission(String permission);
 
     // Getters
@@ -69,9 +55,6 @@ public abstract class User {
     public String getPhone() { return phone; }
     public UserRole getRole() { return role; }
 
-    /**
-     * Validates password for authentication.
-     */
     public boolean validatePassword(String password) {
         return this.password.equals(password);
     }

@@ -1,16 +1,24 @@
 package com.hotel.Model;
-    public class Dining extends Facilities {
-        private final double tip; // absolute tip amount
 
-        public Dining(String description, double baseCost, double tip) {
-            super(description, baseCost);
-            this.tip = tip;
-        }
+public class Dining extends Facilities {
+    private final int quantity;
 
-        @Override
-        public double getCharge() {
-            return getBaseCost() + tip;
-        }
+    public Dining(String description, double baseCost, int quantity) {
+        // Facilities provides a two-argument constructor; pass those two
+        super(description, baseCost);
+        this.quantity = quantity;
     }
+
+    @Override
+    public double getCharge() {
+        // total cost = baseCost * quantity
+        return getBaseCost() * getQuantity();
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+}
+
 
 

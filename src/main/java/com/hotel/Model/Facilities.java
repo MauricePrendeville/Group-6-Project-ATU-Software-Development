@@ -34,6 +34,7 @@ public abstract class Facilities {
         }
         payment.addCharge(description + " (" + this.getClass().getSimpleName() + ")", getCharge());
     }
+
 }
 
 

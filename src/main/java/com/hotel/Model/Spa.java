@@ -1,17 +1,20 @@
 package com.hotel.Model;
 
-    public class Spa extends Facilities {
-        private final double treatmentSurcharge;
+public class Spa extends Facilities {
+    private final int quantity;
 
-        public Spa(String description, double baseCost, double treatmentSurcharge) {
-            super(description, baseCost);
-            this.treatmentSurcharge = treatmentSurcharge;
-        }
-
-        @Override
-        public double getCharge() {
-            return getBaseCost() + treatmentSurcharge;
-        }
+    public Spa(String description, double baseCost, int quantity) {
+        super(description, baseCost);
+        this.quantity = quantity;
     }
 
+    @Override
+    public double getCharge() {
+        return getBaseCost() * getQuantity();
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+}
 
