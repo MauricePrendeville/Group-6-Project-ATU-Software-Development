@@ -1,8 +1,6 @@
 package com.hotel;
 
-import com.hotel.Model.Guest;
-import com.hotel.Model.PaymentMethod;
-import com.hotel.UserRole;
+import com.hotel.Model.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 

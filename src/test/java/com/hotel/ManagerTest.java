@@ -1,16 +1,17 @@
 package com.hotel;
 
+import com.hotel.Model.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class ManagerTest {
 
-    private com.hotel.Manager manager;
+    private Manager manager;
 
     @BeforeEach
     void setUp() {
-        manager = new com.hotel.Manager("M001", "Jane Manager", "jane@hotel.com",
+        manager = new Manager("M001", "Jane Manager", "jane@hotel.com",
                 "0871234567", "pass123", "Operations");
     }
 
@@ -21,14 +22,14 @@ class ManagerTest {
         assertEquals("M001", manager.getUserId());
         assertEquals("Jane Manager", manager.getName());
         assertEquals("Operations", manager.getDepartment());
-        assertEquals(com.hotel.UserRole.MANAGER, manager.getRole());
+        assertEquals(UserRole.MANAGER, manager.getRole());
     }
 
     @Test
     @DisplayName("Constructor should throw exception for null department")
     void testConstructorNullDepartment() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new com.hotel.Manager("M002", "Test Manager", "test@hotel.com",
+            new Manager("M002", "Test Manager", "test@hotel.com",
                     "0870000000", "pass", null);
         });
     }
