@@ -1,7 +1,5 @@
 package com.hotel.Model;
 
-import com.hotel.Model.UserRole;
-
 import java.util.Objects;
 /**
  * Abstract base class representing a user in the hotel booking system.

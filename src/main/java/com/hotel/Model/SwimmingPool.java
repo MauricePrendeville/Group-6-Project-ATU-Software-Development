@@ -6,7 +6,6 @@ public class SwimmingPool extends Facilities {
     public SwimmingPool(String description, double baseCost) {
         this(description, baseCost, 1);
     }
-}
 
     public SwimmingPool(String description, double baseCost, int quantity) {
         super(description, baseCost);
@@ -22,4 +21,3 @@ public class SwimmingPool extends Facilities {
         return quantity;
     }
 }
-

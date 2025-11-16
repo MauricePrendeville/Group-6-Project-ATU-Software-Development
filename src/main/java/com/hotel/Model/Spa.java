@@ -1,5 +1,4 @@
 package com.hotel.Model;
-
 public class Spa extends Facilities {
     private final int quantity;
 
@@ -12,11 +11,11 @@ public class Spa extends Facilities {
     public double getCharge() {
         return getBaseCost() * getQuantity();
     }
-}
 
     public int getQuantity() {
         return quantity;
     }
 }
+
 
 
