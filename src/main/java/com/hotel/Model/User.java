@@ -1,9 +1,6 @@
 package com.hotel.Model;
 
-import com.hotel.Model.UserRole;
-
 import java.util.Objects;
-
 /**
  * Abstract base class representing a user in the hotel booking system.
  * This class provides common attributes and methods for all user types.
@@ -56,7 +53,7 @@ public abstract class User {
     /**
      Abstract method to get user permissions.
      Each user type implements their specific permissions.
-   */
+     */
     public abstract String getPermissions();
 
     /**
@@ -69,7 +66,7 @@ public abstract class User {
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPhone() { return phone; }
-    public UserRole getRole() { return role; }
+    public com.hotel.UserRole getRole() { return role; }
 
     /**
      * Validates password for authentication.
