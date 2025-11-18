@@ -99,7 +99,7 @@ class InvoiceTest {
     }
 
     @Test
-    @DisplayName("Tax should be calculated correctly with default rate")
+    @DisplayName("VAT should be calculated correctly with default rate")
     void testDefaultTaxCalculation() {
         // 20% of €360 = €72.00
         assertEquals(0.20, invoice.getTaxRate(), 0.001);
@@ -114,7 +114,7 @@ class InvoiceTest {
     }
 
     @Test
-    @DisplayName("Constructor with custom tax rate should use it")
+    @DisplayName("Constructor with custom VAT rate should use it")
     void testCustomTaxRate() {
         Invoice customInvoice = new Invoice(booking, payment, 0.20);
 
@@ -124,7 +124,7 @@ class InvoiceTest {
     }
 
     @Test
-    @DisplayName("Constructor with invalid tax rate should throw exception")
+    @DisplayName("Constructor with invalid VAT rate should throw exception")
     void testInvalidTaxRate() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Invoice(booking, payment, -0.1);
@@ -143,7 +143,7 @@ class InvoiceTest {
         invoice.addAdditionalCharge("Room Service", 50.00);
 
         assertEquals(initialSubtotal + 50.00, invoice.getSubtotal(), 0.01);
-        assertTrue(invoice.getTaxAmount() > 72.00); // Tax should increase
+        assertTrue(invoice.getTaxAmount() > 72.00); // VAT should increase
         assertTrue(invoice.getTotalAmount() > 432.00); // Total should increase
     }
 
@@ -229,7 +229,7 @@ class InvoiceTest {
         String formatted = invoice.generateFormattedInvoice();
 
         assertTrue(formatted.contains("360.00")); // Subtotal
-        assertTrue(formatted.contains("72.00")); // Tax (20% of 360)
+        assertTrue(formatted.contains("72.00")); // VAT (20% of 360)
         assertTrue(formatted.contains("432.00")); // Total
     }
 

@@ -66,7 +66,7 @@ public abstract class User {
     public String getName() { return name; }
     public String getEmail() { return email; }
     public String getPhone() { return phone; }
-    public com.hotel.UserRole getRole() { return role; }
+    public UserRole getRole() { return role; }
 
     /**
      * Validates password for authentication.

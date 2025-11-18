@@ -100,7 +100,7 @@ class PaymentManagerTest {
     }
 
     @Test
-    @DisplayName("Generate invoice with custom tax rate should use it")
+    @DisplayName("Generate invoice with custom VAT rate should use it")
     void testGenerateInvoiceCustomTaxRate() {
         Payment payment = new Payment(booking.getBookingID(), 750.00,
                 PaymentMethod.CASH, "Bob Wilson");
