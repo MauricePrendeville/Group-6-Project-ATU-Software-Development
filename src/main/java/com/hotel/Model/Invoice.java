@@ -94,7 +94,7 @@ public class Invoice {
      */
     private void validateTaxRate(double rate) {
         if (rate < 0.0 || rate > 1.0) {
-            throw new IllegalArgumentException("Tax rate must be between 0.0 and 1.0");
+            throw new IllegalArgumentException("VAT rate must be between 0.0 and 1.0");
         }
     }
 
@@ -219,7 +219,7 @@ public class Invoice {
         // Totals
         invoice.append(String.format("%55s €%9.2f\n", "Subtotal:", subtotal));
         invoice.append(String.format("%55s €%9.2f\n",
-                String.format("Tax (%.0f%%):", taxRate * 100), taxAmount));
+                String.format("VAT (%.0f%%):", taxRate * 100), taxAmount));
         invoice.append("═══════════════════════════════════════════════════════════\n");
         invoice.append(String.format("%55s €%9.2f\n", "TOTAL:", totalAmount));
         invoice.append("═══════════════════════════════════════════════════════════\n");
