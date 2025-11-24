@@ -66,6 +66,10 @@ public class BookingRegister {
 //        }
 //    }
 
+    /**
+     * showRooms - This method was created when it was thought that all the Rooms would be in one bookingRegister
+     * instead of a bookingRegister for each Room and a RoomInventory for the Hotel.
+     */
     public void showRooms() {
             ArrayList<Room> rooms = new ArrayList<>();
             rooms = roomList;
@@ -75,6 +79,12 @@ public class BookingRegister {
     }
 
     //this method adds the booking to the booking register for this room. The bookingID number is also added
+
+    /**
+     * addBooking - This method adds a Booking object to the bookingRegister list for a Room.
+     * The Booking should be CONFIRMED before this method is called.
+     * @param booking - the details of the Booking
+     */
     public void addBooking(Booking booking) {
 
         System.out.println(booking.getBookingGuest().getName());
@@ -82,6 +92,11 @@ public class BookingRegister {
         System.out.println("add booking" + booking.getBookingID());
     }
 
+    /**
+     * showBookings - This method was used for to show each Booking including
+     * details of Guest, Arrival, Departure, and Room. It was used for testing until the
+     * HotelManagmentUI class was completed.
+     */
     public void showBookings() {
         System.out.println("List of Bookings: ");
         for (Map.Entry<Integer, Booking> entry : bookingRegister.entrySet()) {
@@ -93,7 +108,10 @@ public class BookingRegister {
         }
     }
 
-
+    /**
+     * showGuests - This method was used to show the list of all Guests and their Rooms.
+     * It was used for testing until the HotelManagementUI class was completed.
+     */
     //add option to pass date to this method to get guests on a particular date
     public void showGuests() {
         System.out.println("List of Guests: ");
@@ -103,9 +121,12 @@ public class BookingRegister {
         }
     }
 
-
-    //use addDatesToRegister when the Booking is set to CONFIRMED
-    public void addDatesToRegister(Booking booking) {
+    /**
+     * addDatesToRegister - This method is used to add dates to the bookingRegister List for a Room when
+     * the Booking is set to CONFIRMED
+     * @param booking - the details of the Guest's Booking
+     */
+     public void addDatesToRegister(Booking booking) {
         LocalDate arrive = booking.getArriveDate();
         LocalDate depart = booking.getDepartDate();
 
