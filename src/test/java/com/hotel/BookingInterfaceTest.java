@@ -1,6 +1,9 @@
 package com.hotel;
 
+import com.hotel.Model.Room;
+import com.hotel.Model.RoomType;
 import com.hotel.Service.BookingInterface;
+import com.hotel.Service.RoomInventoryImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import static com.hotel.Service.BookingInterface.parseDate;
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,9 +46,10 @@ class BookingInterfaceTest {
 
     }
 
-//    @AfterEach
-//    void tearDown() {
-//    }
+    @AfterEach
+    void tearDown() {
+        System.setIn(originalSystemIn);
+    }
 //
 //    @AfterEach
 //    public void restoreSystemIn() {
@@ -71,39 +76,37 @@ class BookingInterfaceTest {
 
     @Test
     void testGetValidDate() {
+          BookingInterface bookingInterface = new BookingInterface();
+          String input ="25\n11\n2025\n";
+          System.setIn(new ByteArrayInputStream(input.getBytes()));
 
-//        String simulatedInputDateDay = "23\n";
-//        ByteArrayInputStream testInputDay = new ByteArrayInputStream(simulatedInputDateDay.getBytes());
-//        System.setIn(testInputDay);
-//        String simulatedInputDateMonth = "11\n";
-//        ByteArrayInputStream testInputMonth = new ByteArrayInputStream(simulatedInputDateMonth.getBytes());
-//        System.setIn(testInputMonth);
-//        String simulatedInputDateYear = "2025\n";
-//        ByteArrayInputStream testInputYear = new ByteArrayInputStream(simulatedInputDateYear.getBytes());
-//        System.setIn(testInputYear);
-//
-//        BookingInterface bookingInterface = new BookingInterface();
-//        LocalDate result = bookingInterface.getValidDate();
-//        assertEquals(LocalDate.of(2025,11,23), result);
+          LocalDate result = bookingInterface.getValidDate();
+          assertEquals(LocalDate.of(2025,11,25), result);
 
-//        String simulatedInputDateDay2 = "42\n";
-//        ByteArrayInputStream testInputDay2 = new ByteArrayInputStream(simulatedInputDateDay2.getBytes());
-//        System.setIn(testInputDay2);
-//        String simulatedInputDateMonth2 = "25\n";
-//        ByteArrayInputStream testInputMonth2 = new ByteArrayInputStream(simulatedInputDateMonth2.getBytes());
-//        System.setIn(testInputMonth2);
-//        String simulatedInputDateYear2 = "2025\n";
-//        ByteArrayInputStream testInputYear2 = new ByteArrayInputStream(simulatedInputDateYear2.getBytes());
-//        System.setIn(testInputYear2);
-//
-//        BookingInterface bookingInterface2 = new BookingInterface();
-//        LocalDate result2 = bookingInterface2.getValidDate();
-//        assertNull(result2);
+          String input2 ="28\n11\n2025\n";
+          System.setIn(new ByteArrayInputStream(input2.getBytes()));
+
+          LocalDate result2 = bookingInterface.getValidDate(LocalDate.of(2025,11,25));
+          assertEquals(LocalDate.of(2025,11,28), result2);
+
     }
 
 
 
     @Test
-    void getStayRequestDetails() {
+    void testGetStayRequestDetails() {
+        RoomInventoryImpl roomInventory = new RoomInventoryImpl();
+        roomInventory = new RoomInventoryImpl();
+        Room room1 = new Room(101, RoomType.SINGLE, true, 199);
+        roomInventory.addRoom(room1);
+
+
+        BookingInterface bookingInterface = new BookingInterface();
+        String input2 = new StringBuilder()
+                //.append("25\n11\n2025\n")
+               // .append("28\n11\n2025\n")
+         .append("1\nGrady\njanitor@overlookhotel.com\n123\npass\n").append("1\n").toString();
+        System.setIn(new ByteArrayInputStream(input2.getBytes()));
+        bookingInterface.getStayRequestDetails(roomInventory);
     }
 }

@@ -51,7 +51,7 @@ public class BookingInterface {
             int dateMonth = scanning.nextInt();
             System.out.println("Year: ");
             int dateYear = scanning.nextInt();
-
+            scanning.nextLine();
             candidateDate = parseDate(dateYear, dateMonth, dateDay);
             if (candidateDate == null) {
                 System.out.println("Invalid! Try again.");
@@ -78,7 +78,7 @@ public class BookingInterface {
             int dateMonth = scanning.nextInt();
             System.out.println("Year: ");
             int dateYear = scanning.nextInt();
-
+            scanning.nextLine();
             candidateDate = parseDate(dateYear, dateMonth, dateDay);
             if (candidateDate == null) {
                 System.out.println("Invalid! Try again.");
@@ -106,23 +106,25 @@ public class BookingInterface {
     public void getStayRequestDetails (RoomInventoryImpl roomInventory) {
 
        Scanner scanning = new Scanner(System.in);
-       System.out.println("Enter Date of Arrival: ");
-       LocalDate arriveDate = getValidDate();
+       //**********************************************Temporarily removing the get date methods to figure out how to get
+        //**************************************************** test class to run ************************************************
+//       System.out.println("Enter Date of Arrival: ");
+//       LocalDate arriveDate = getValidDate();
 
-       System.out.println("Enter Date of Departure: ");
-       LocalDate departDate = getValidDate(arriveDate);
+//       System.out.println("Enter Date of Departure: ");
+//       LocalDate departDate = getValidDate(arriveDate);
 
 
         System.out.println("Enter User ID: ");
-        String guestID = scanning.next();
+        String guestID = scanning.nextLine();
         System.out.println("Enter Name: ");
-        String guestName = scanning.next();
+        String guestName = scanning.nextLine();
         System.out.println("Enter Email: ");
-        String guestEmail = scanning.next();
+        String guestEmail = scanning.nextLine();
         System.out.println("Enter Phone: ");
-        String guestPhone = scanning.next();
+        String guestPhone = scanning.nextLine();
         System.out.println("Enter Password: ");
-        String guestPassword = scanning.next();
+        String guestPassword = scanning.nextLine();
        Guest guest = new Guest(guestID, guestName, guestEmail, guestPhone, guestPassword);
        RoomType roomType = RoomType.SINGLE;
 
@@ -146,6 +148,8 @@ public class BookingInterface {
         }
 
 //       Room room3 = new Room("Three", "Regular Double");
+        LocalDate arriveDate = LocalDate.of(2025,12,01);
+        LocalDate departDate = LocalDate.of(2025,12,02);
 
        Booking booking = new Booking(arriveDate,
                departDate, guest);

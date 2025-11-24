@@ -1,9 +1,6 @@
 package com.hotel;
 
-import com.hotel.Model.BookingStatus;
-import com.hotel.Model.Guest;
-import com.hotel.Model.Room;
-import com.hotel.Model.RoomType;
+import com.hotel.Model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +21,7 @@ class BookingTest {
     //private Receptionist checkingReceptionist;
     private Room bookingRoom;
     private BookingStatus bookingStatus;
+    private Booking booking;
 
     @BeforeEach
     void setUp() {
@@ -40,6 +38,8 @@ class BookingTest {
 
         //create Room
         Room bookingRoom = new Room(1, RoomType.SINGLE,true,168.0);
+
+        Booking booking = new Booking(LocalDate.of(2025, 11,23), LocalDate.of(2025,11,30), bookingGuest, bookingRoom);
 
         //create bookingStatus
         BookingStatus bookingStatus = BookingStatus.UNCONFIRMED;
@@ -87,7 +87,11 @@ class BookingTest {
     }
 
     @Test
-    void setBookingID() {
+    void testSetBookingID() {
+        int bookingID = 2;
+        Booking booking = new Booking(LocalDate.of(2025, 11,23), LocalDate.of(2025,11,30), bookingGuest, bookingRoom);
+        booking.setBookingID(bookingID);
+        assertEquals(2,booking.getBookingID());
     }
 
     @Test

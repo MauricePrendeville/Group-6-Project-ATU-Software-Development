@@ -52,7 +52,7 @@ class BookingRegisterTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() {  System.setOut(originalOut);
     }
 
     @Test
