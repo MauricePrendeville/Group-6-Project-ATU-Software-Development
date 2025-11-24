@@ -98,6 +98,11 @@ public class BookingInterface {
         return candidateDate;
     }
 
+    /**
+     * getStayRequestDetails - This method was used to test a prototype UI to allow entry of
+     * Booking by a user before the HotelManagementUI was developed.
+     * @param roomInventory - the list of all Rooms in the Hotel
+     */
     public void getStayRequestDetails (RoomInventoryImpl roomInventory) {
 
        Scanner scanning = new Scanner(System.in);
