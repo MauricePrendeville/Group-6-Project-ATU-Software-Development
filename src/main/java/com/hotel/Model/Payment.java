@@ -1,6 +1,5 @@
 package com.hotel.Model;
 
-// File: `src/main/java/com/hotel/Model/Payment.java`
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -158,7 +157,7 @@ public class Payment {
     /**
      * Returns an unmodifiable list of recorded line items.
      */
-    public List<LineItem> getCharges() {
+    public List<LineItem> getLineItems() {
         return Collections.unmodifiableList(lineItems);
     }
 
@@ -259,52 +258,117 @@ public class Payment {
         return paymentStatus == PaymentStatus.COMPLETED;
     }
 
-    // Getters
+    // --- Getters ---
+
+    /**
+     * Gets the unique ID of the payment.
+     *
+     * @return The payment ID string.
+     */
     public String getPaymentId() {
         return paymentId;
     }
 
+    /**
+     * Gets the ID of the booking associated with this payment.
+     *
+     * @return The booking ID integer.
+     */
     public int getBookingId() {
         return bookingId;
     }
 
+    /**
+     * Gets the total payment amount, which includes the initial amount plus all recorded line item charges.
+     *
+     * @return The total monetary amount of the payment.
+     */
     public double getAmount() {
         return amount;
     }
 
+    /**
+     * Gets the method used for the payment (e.g., Credit Card, Cash).
+     *
+     * @return The {@link PaymentMethod}.
+     */
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
+    /**
+     * Gets the current status of the payment.
+     *
+     * @return The {@link PaymentStatus} (e.g., PENDING, COMPLETED, REFUNDED).
+     */
     public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
+    /**
+     * Gets the date and time when the payment object was created.
+     *
+     * @return The {@link LocalDateTime} the payment was initiated.
+     */
     public LocalDateTime getPaymentDate() {
         return paymentDate;
     }
 
+    /**
+     * Gets the date and time when the payment status was last changed (e.g., processed, failed, refunded).
+     *
+     * @return The {@link LocalDateTime} the payment was processed, or {@code null} if only PENDING.
+     */
     public LocalDateTime getProcessedDate() {
         return processedDate;
     }
 
+    /**
+     * Gets the external transaction reference string.
+     *
+     * @return The transaction reference, or {@code null} if not applicable.
+     */
     public String getTransactionReference() {
         return transactionReference;
     }
 
+    /**
+     * Gets the name of the guest who made the payment.
+     *
+     * @return The guest's name string.
+     */
     public String getGuestName() {
         return guestName;
     }
 
+    /**
+     * Gets the unique receipt number for this payment.
+     *
+     * @return The receipt number string.
+     */
     public String getReceiptNumber() {
         return receiptNumber;
     }
 
-    // Setters with validation
+    // --- Setters ---
+
+    /**
+     * Sets the external transaction reference for this payment.
+     *
+     * @param transactionReference The new transaction reference string.
+     */
     public void setTransactionReference(String transactionReference) {
         this.transactionReference = transactionReference;
     }
 
+    /**
+     * Sets the payment status directly.
+     * **Note:** It is generally recommended to use the dedicated status methods (e.g., {@link #processPayment()})
+     * to enforce business logic transitions.
+     *
+     * @param status The new {@link PaymentStatus}.
+     * @throws IllegalArgumentException if the provided status is null.
+     */
     public void setPaymentStatus(PaymentStatus status) {
         if (status == null) {
             throw new IllegalArgumentException("Payment status cannot be null");
