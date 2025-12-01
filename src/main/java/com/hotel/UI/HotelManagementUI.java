@@ -537,7 +537,7 @@ public class HotelManagementUI {
             boolean firstChargeSkipped = false;
 
             // We use getCharges() from the itemized Payment object
-            for (Payment.LineItem charge : payment.getCharges()) {
+            for (Payment.LineItem charge : payment.getLineItems()) {
 
                 // The first LineItem is the Room Charge, which the Invoice constructor already handles.
                 // We skip the first item to avoid double-charging the room.
