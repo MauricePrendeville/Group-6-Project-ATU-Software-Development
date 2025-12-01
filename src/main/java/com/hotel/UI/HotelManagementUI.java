@@ -11,9 +11,12 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Hotel Management System UI
- * CLI based interface for all hotel operations.
- * Supports role-based access control and integrates all system components.
+ * Hotel Management System User Interface.
+ * Provides a command-line interface for hotel operations including booking,
+ * payments, user management, and room management with role-based access control.
+ *
+ * @author Group 6
+ * @version 1.0
  */
 public class HotelManagementUI {
 
@@ -25,7 +28,8 @@ public class HotelManagementUI {
     private boolean running;
 
     /**
-     * Constructor initializes the UI with all required service managers.
+     * Constructs a HotelManagementUI with default settings.
+     * Initializes all managers and loads sample data for testing.
      */
     public HotelManagementUI() {
         this.scanner = new Scanner(System.in);
@@ -38,7 +42,12 @@ public class HotelManagementUI {
     }
 
     /**
-     * Constructor with existing managers (for testing/integration).
+     * Constructs a HotelManagementUI with provided managers.
+     * Used for integration with existing system components.
+     *
+     * @param userManager the user management service
+     * @param roomInventory the room inventory service
+     * @param paymentManager the payment management service
      */
     public HotelManagementUI(UserManager userManager, RoomInventoryImpl roomInventory, PaymentManager paymentManager) {
         this.scanner = new Scanner(System.in);
@@ -50,7 +59,7 @@ public class HotelManagementUI {
     }
 
     /**
-     * Initializes the system with sample users and rooms for testing.
+     * Initializes the system with sample users and rooms for demonstration purposes.
      */
     private void initializeSampleData() {
         try {
@@ -101,14 +110,21 @@ public class HotelManagementUI {
         scanner.close();
     }
 
-    private void displayWelcomeBanner() {
+    /**
+     * Displays the welcome banner with hotel name and location.
+     */
+    public void displayWelcomeBanner() {
         System.out.println("\n╔════════════════════════════════════════════════════════════╗");
         System.out.println("║          THE GROUP 6 HOTEL MANAGEMENT SYSTEM               ║");
         System.out.println("║          Shore Road, Killybegs, Co. Donegal                ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝");
     }
 
-    private void showLoginMenu() {
+    /**
+     * Shows the login menu for unauthenticated users.
+     * Provides options to login, register, view info, or exit.
+     */
+    public void showLoginMenu() {
         System.out.println("\n═══════════════════ LOGIN MENU ═══════════════════");
         System.out.println("1. Login");
         System.out.println("2. Register New Guest");
@@ -126,24 +142,43 @@ public class HotelManagementUI {
         }
     }
 
-    private void handleLogin() {
+    /**
+     * Handles user login authentication.
+     * Prompts for email and password, validates credentials.
+     *
+     * @return true if login successful, false otherwise
+     */
+    public boolean handleLogin() {
         System.out.println("\n────────────── LOGIN ────────────────");
         System.out.print("Email: ");
         String email = scanner.nextLine().trim();
         System.out.print("Password: ");
         String password = scanner.nextLine().trim();
 
-        User user = userManager.authenticateUser(email, password);
-        if (user != null) {
-            currentUser = user;
-            System.out.println("\nLogin successful, welcome " + user.getName() + "!");
-            System.out.println("Role: " + user.getRole());
-        } else {
-            System.out.println("\nLogin failed. Invalid email or password.");
+        // Add Try-Catch block here
+        try {
+            User user = userManager.authenticateUser(email, password);
+            if (user != null) {
+                currentUser = user;
+                System.out.println("\nLogin successful, welcome " + user.getName() + "!");
+                return true;
+            } else {
+                System.out.println("\nLogin failed. Invalid email or password.");
+                return false;
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("\nLogin failed: " + e.getMessage());
+            return false;
         }
     }
 
-    private void handleGuestRegistration() {
+    /**
+     * Handles new guest registration.
+     * Collects guest information and creates a new account.
+     *
+     * @return the created Guest object, or null if registration failed
+     */
+    public Guest handleGuestRegistration() {
         System.out.println("\n────────────── GUEST REGISTRATION ────────────────");
         try {
             System.out.print("Name: ");
@@ -153,7 +188,7 @@ public class HotelManagementUI {
 
             if (userManager.emailExists(email)) {
                 System.out.println("Email already registered.");
-                return;
+                return null;
             }
 
             System.out.print("Phone: ");
@@ -166,12 +201,18 @@ public class HotelManagementUI {
             userManager.addUser(guest);
 
             System.out.println("\nRegistration successful! Your Guest ID: " + userId);
+            return guest;
         } catch (IllegalArgumentException e) {
             System.out.println("Registration failed: " + e.getMessage());
+            return null;
         }
     }
 
-    private void displayHotelInformation() {
+    /**
+     * Displays hotel information including location, contact details,
+     * room types, prices, and available facilities.
+     */
+    public void displayHotelInformation() {
         System.out.println("\n╔════════════════════════════════════════════════════════════╗");
         System.out.println("║              THE GROUP 6 HOTEL                             ║");
         System.out.println("╠════════════════════════════════════════════════════════════╣");
@@ -186,6 +227,10 @@ public class HotelManagementUI {
         System.out.println("Available: " + roomInventory.getAvailableRooms().size());
     }
 
+    /**
+     * Shows the main menu based on current user's role.
+     * Displays role-specific options for admin, reception, manager, cleaner, or guest.
+     */
     private void showMainMenu() {
         System.out.println("\n═══════════════════ MAIN MENU ═══════════════════");
         System.out.println("User: " + currentUser.getName() + " (" + currentUser.getRole() + ")");
@@ -200,6 +245,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays the admin menu with management options.
+     */
     private void showAdminMenu() {
         System.out.println("1. User Management");
         System.out.println("2. Room Management");
@@ -223,6 +271,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays the reception staff menu with booking and check-in options.
+     */
     private void showReceptionMenu() {
         System.out.println("1. Create Booking");
         System.out.println("2. Check Availability");
@@ -252,6 +303,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays the manager menu with reporting and analytics options.
+     */
     private void showManagerMenu() {
         System.out.println("1. View Bookings");
         System.out.println("2. View Rooms");
@@ -279,6 +333,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays the cleaner menu with room status options.
+     */
     private void showCleanerMenu() {
         System.out.println("1. View Assigned Rooms");
         System.out.println("2. Update Room Status");
@@ -297,6 +354,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays the guest menu with booking and profile options.
+     */
     private void showGuestMenu() {
         System.out.println("1. Make Booking");
         System.out.println("2. My Bookings");
@@ -319,6 +379,10 @@ public class HotelManagementUI {
     }
 
     // BOOKING OPERATIONS
+    /**
+     * Handles the booking creation process.
+     * Collects guest info, dates, room type, and confirms availability.
+     */
     private void handleCreateBooking() {
         System.out.println("\n────────────── CREATE BOOKING ────────────────");
         try {
@@ -375,6 +439,11 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Creates a new guest for a booking.
+     *
+     * @return the created Guest, or null if creation failed
+     */
     private Guest createNewGuestForBooking() {
         try {
             System.out.println("\n── New Guest ──");
@@ -404,16 +473,26 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles guest booking (same as create booking for guests).
+     */
     private void handleGuestBooking() {
         handleCreateBooking(); // Same logic for guest
     }
 
+    /**
+     * Handles guest check-in process.
+     */
     private void handleCheckIn() {
         System.out.println("\n────────────── CHECK-IN ────────────────");
         int bookingId = getIntInput("Booking ID: ");
         System.out.println("Guest checked in. Booking: " + bookingId);
     }
 
+    /**
+     * Handles guest check-out and payment processing.
+     * Calculates charges, processes payment, and generates invoice.
+     */
     private void handleCheckOutAndPayment() {
         System.out.println("\n────────────── CHECK-OUT & PAYMENT ────────────────");
         try {
@@ -453,6 +532,25 @@ public class HotelManagementUI {
 
             Invoice invoice = paymentManager.processPayment(booking, payment.getAmount(),
                     method, guest.getName());
+
+            System.out.println("Itemizing additional charges on invoice...");
+            boolean firstChargeSkipped = false;
+
+            // We use getCharges() from the itemized Payment object
+            for (Payment.LineItem charge : payment.getCharges()) {
+
+                // The first LineItem is the Room Charge, which the Invoice constructor already handles.
+                // We skip the first item to avoid double-charging the room.
+                if (!firstChargeSkipped) {
+                    firstChargeSkipped = true;
+                    continue;
+                }
+
+                // Use the Invoice method to add the facility charge.
+                // LineItem is assumed to have getDescription() and getCharge() methods.
+                invoice.addAdditionalCharge(charge.getDescription(), charge.getAmount());
+            }
+
             System.out.println("\nPayment processed!");
             System.out.println(invoice.generateFormattedInvoice());
 
@@ -463,6 +561,9 @@ public class HotelManagementUI {
 
     /**
      * Adds facility charges to a payment.
+     * Prompts for facility selection and quantity.
+     *
+     * @param payment the payment to add charges to
      */
     private void addFacilityChargesToPayment(Payment payment) {
         boolean adding = true;
@@ -521,6 +622,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles adding facility charges to an existing booking.
+     */
     private void handleAddFacilityCharges() {
         int bookingId = getIntInput("Booking ID: ");
         System.out.print("Guest Name: ");
@@ -529,8 +633,10 @@ public class HotelManagementUI {
         addFacilityChargesToPayment(payment);
         System.out.println("Charges added: €" + payment.getAmount());
     }
-    // CONTINUED FROM PART 1...
 
+    /**
+     * Checks room availability for given dates and type.
+     */
     private void handleCheckAvailability() {
         System.out.println("\n────────────── CHECK AVAILABILITY ────────────────");
         try {
@@ -554,11 +660,17 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays all bookings in the system.
+     */
     private void handleViewAllBookings() {
         System.out.println("\n────────────── ALL BOOKINGS ────────────────");
         roomInventory.showAllBookings();
     }
 
+    /**
+     * Displays bookings for the current guest user.
+     */
     private void handleViewMyBookings() {
         System.out.println("\n────────────── MY BOOKINGS ────────────────");
         Guest guest = (Guest) currentUser;
@@ -570,12 +682,18 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles booking modification.
+     */
     private void handleModifyBooking() {
         System.out.println("\n────────────── MODIFY BOOKING ────────────────");
         int id = getIntInput("Booking ID: ");
         System.out.println("Modification functionality - Booking: " + id);
     }
 
+    /**
+     * Handles booking cancellation.
+     */
     private void handleCancelBooking() {
         System.out.println("\n────────────── CANCEL BOOKING ────────────────");
         int id = getIntInput("Booking ID: ");
@@ -585,6 +703,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles overall booking management operations.
+     */
     private void handleBookingManagement() {
         System.out.println("1. View All Bookings");
         System.out.println("2. Search Booking");
@@ -594,11 +715,17 @@ public class HotelManagementUI {
     }
 
     // ROOM OPERATIONS
+    /**
+     * Displays all rooms in the inventory.
+     */
     private void handleViewAllRooms() {
         System.out.println("\n────────────── ALL ROOMS ────────────────");
         roomInventory.displayAllRooms();
     }
 
+    /**
+     * Displays available rooms for booking.
+     */
     private void handleViewAvailableRooms() {
         System.out.println("\n────────────── AVAILABLE ROOMS ────────────────");
         List<Room> available = roomInventory.getAvailableRooms();
@@ -612,6 +739,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles room management operations (add, remove, update).
+     */
     private void handleRoomManagement() {
         System.out.println("\n────────────── ROOM MANAGEMENT ────────────────");
         System.out.println("1. Add Room");
@@ -628,6 +758,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles adding a new room to inventory.
+     */
     private void handleAddRoom() {
         System.out.println("\n── Add Room ──");
         try {
@@ -642,12 +775,18 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles removing a room from inventory.
+     */
     private void handleRemoveRoom() {
         System.out.println("\n── Remove Room ──");
         int num = getIntInput("Room Number: ");
         roomInventory.removeRoom(num);
     }
 
+    /**
+     * Handles updating room availability status.
+     */
     private void handleUpdateRoomStatusAdmin() {
         System.out.println("\n── Update Room Status ──");
         int num = getIntInput("Room Number: ");
@@ -658,6 +797,11 @@ public class HotelManagementUI {
     }
 
     // CLEANER OPERATIONS
+    /**
+     * Displays rooms assigned to a cleaner.
+     *
+     * @param cleaner the cleaner whose assignments to show
+     */
     private void handleViewAssignedRooms(Cleaner cleaner) {
         System.out.println("\n────────────── ASSIGNED ROOMS ────────────────");
         List<String> rooms = cleaner.getAssignedRooms();
@@ -668,6 +812,11 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles room status update by cleaner.
+     *
+     * @param cleaner the cleaner updating status
+     */
     private void handleUpdateRoomStatus(Cleaner cleaner) {
         System.out.println("\n── Update Room Status ──");
         System.out.print("Room Number: ");
@@ -680,6 +829,9 @@ public class HotelManagementUI {
     }
 
     // USER MANAGEMENT
+    /**
+     * Handles user management operations.
+     */
     private void handleUserManagement() {
         System.out.println("\n────────────── USER MANAGEMENT ────────────────");
         System.out.println("1. View All");
@@ -696,6 +848,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays all users in the system.
+     */
     private void handleViewAllUsers() {
         System.out.println("\n────────────── ALL USERS ────────────────");
         List<User> users = userManager.getAllUsers();
@@ -706,6 +861,9 @@ public class HotelManagementUI {
         System.out.println("\nTotal: " + userManager.getTotalUserCount());
     }
 
+    /**
+     * Handles adding a new user to the system.
+     */
     private void handleAddUser() {
         System.out.println("\n── Add User ──");
         try {
@@ -761,6 +919,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Handles searching for users by name.
+     */
     private void handleSearchUser() {
         System.out.println("\n── Search User ──");
         System.out.print("Name: ");
@@ -773,6 +934,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays users filtered by role.
+     */
     private void handleViewUsersByRole() {
         System.out.println("\n1. Admin 2. Reception 3. Manager 4. Cleaner 5. Guest");
         int choice = getIntInput("Role: ");
@@ -787,11 +951,26 @@ public class HotelManagementUI {
         if (role != null) {
             List<User> users = userManager.getUsersByRole(role);
             System.out.println("\n" + role + " Users:");
-            users.forEach(u -> System.out.println(u.getUserId() + " - " + u.getName()));
+
+            users.forEach(u -> {
+                String output = u.getUserId() + " - " + u.getName();
+
+                // Check if the user is a Manager to include the department
+                if (u instanceof Manager) {
+                    Manager manager = (Manager) u; // Cast the User object to a Manager object
+                    output += " (Dept: " + manager.getDepartment() + ")";
+                }
+
+                System.out.println(output);
+            });
+
             System.out.println("Total: " + users.size());
         }
     }
 
+    /**
+     * Displays all guest users.
+     */
     private void handleViewAllGuests() {
         System.out.println("\n────────────── ALL GUESTS ────────────────");
         List<User> guests = userManager.getUsersByRole(UserRole.GUEST);
@@ -805,6 +984,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays all staff users.
+     */
     private void handleViewStaff() {
         System.out.println("\n────────────── STAFF ────────────────");
         System.out.println("\nReception: " + userManager.getUsersByRole(UserRole.RECEPTION_STAFF).size());
@@ -814,6 +996,9 @@ public class HotelManagementUI {
     }
 
     // PAYMENT OPERATIONS
+    /**
+     * Handles payment management operations.
+     */
     private void handlePaymentManagement() {
         System.out.println("\n────────────── PAYMENT MANAGEMENT ────────────────");
         System.out.println("1. View All");
@@ -832,6 +1017,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays all payments.
+     */
     private void handleViewAllPayments() {
         System.out.println("\n────────────── ALL PAYMENTS ────────────────");
         List<Payment> payments = paymentManager.getAllPayments();
@@ -845,12 +1033,18 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays details of a specific payment.
+     */
     private void handleViewPaymentDetails() {
         System.out.print("Payment ID: ");
         String id = scanner.nextLine().trim();
         paymentManager.displayPaymentSummary(id);
     }
 
+    /**
+     * Processes a payment refund.
+     */
     private void handleProcessRefund() {
         System.out.print("Payment ID: ");
         String id = scanner.nextLine().trim();
@@ -864,10 +1058,16 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays payment statistics and totals.
+     */
     private void handlePaymentStatistics() {
         System.out.println(paymentManager.getPaymentStatistics());
     }
 
+    /**
+     * Displays a specific invoice.
+     */
     private void handleViewInvoice() {
         System.out.print("Invoice Number: ");
         String num = scanner.nextLine().trim();
@@ -875,6 +1075,9 @@ public class HotelManagementUI {
     }
 
     // REPORTS & ANALYTICS
+    /**
+     * Handles system reports menu.
+     */
     private void handleSystemReports() {
         System.out.println("\n────────────── REPORTS ────────────────");
         System.out.println("1. Occupancy");
@@ -891,6 +1094,9 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays room occupancy report.
+     */
     private void handleRoomOccupancyReport() {
         System.out.println("\n╔════════════════════════════════════════╗");
         System.out.println("║     ROOM OCCUPANCY REPORT              ║");
@@ -906,6 +1112,9 @@ public class HotelManagementUI {
         System.out.println("╚════════════════════════════════════════╝");
     }
 
+    /**
+     * Displays revenue report.
+     */
     private void handleRevenueReport() {
         System.out.println("\n╔════════════════════════════════════════╗");
         System.out.println("║       REVENUE REPORT                   ║");
@@ -919,6 +1128,9 @@ public class HotelManagementUI {
         System.out.println("╚════════════════════════════════════════╝");
     }
 
+    /**
+     * Displays guest statistics.
+     */
     private void handleGuestStatistics() {
         System.out.println("\n╔════════════════════════════════════════╗");
         System.out.println("║      GUEST STATISTICS                  ║");
@@ -928,6 +1140,9 @@ public class HotelManagementUI {
         System.out.println("╚════════════════════════════════════════╝");
     }
 
+    /**
+     * Displays booking statistics.
+     */
     private void handleBookingStatistics() {
         System.out.println("\n╔════════════════════════════════════════╗");
         System.out.println("║    BOOKING STATISTICS                  ║");
@@ -936,6 +1151,9 @@ public class HotelManagementUI {
         System.out.println("╚════════════════════════════════════════╝");
     }
 
+    /**
+     * Displays analytics overview.
+     */
     private void handleViewAnalytics() {
         handleRoomOccupancyReport();
         System.out.println();
@@ -943,6 +1161,9 @@ public class HotelManagementUI {
     }
 
     // PROFILE & SUPPORT
+    /**
+     * Displays current user's profile information.
+     */
     private void handleMyProfile() {
         System.out.println("\n╔════════════════════════════════════════╗");
         System.out.println("║         MY PROFILE                     ║");
@@ -954,6 +1175,9 @@ public class HotelManagementUI {
         System.out.println("╚════════════════════════════════════════╝");
     }
 
+    /**
+     * Handles guest support request.
+     */
     private void handleRequestSupport() {
         System.out.println("\n────────────── SUPPORT ────────────────");
         System.out.print("Describe issue: ");
@@ -962,17 +1186,33 @@ public class HotelManagementUI {
     }
 
     // UTILITY METHODS
-    private void logout() {
-        System.out.println("\nLogged out: " + currentUser.getName());
-        currentUser = null;
+    /**
+     * Logs out the current user and clears session.
+     */
+    public void logout() {
+        if (currentUser != null) {
+            System.out.println("\nLogged out: " + currentUser.getName());
+            currentUser = null;
+        } else {
+            System.out.println("\nNo user currently logged in.");
+        }
     }
 
-    private void displayGoodbyeMessage() {
+    /**
+     * Displays goodbye message when exiting system.
+     */
+    public void displayGoodbyeMessage() {
         System.out.println("\n╔════════════════════════════════════════════════════════════╗");
         System.out.println("║     Thank you for using Group 6 Hotel System!             ║");
         System.out.println("╚════════════════════════════════════════════════════════════╝");
     }
 
+    /**
+     * Prompts for and validates integer input.
+     *
+     * @param prompt the prompt message
+     * @return the validated integer
+     */
     private int getIntInput(String prompt) {
         while (true) {
             try {
@@ -984,6 +1224,12 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Prompts for and validates double input.
+     *
+     * @param prompt the prompt message
+     * @return the validated double
+     */
     private double getDoubleInput(String prompt) {
         while (true) {
             try {
@@ -995,6 +1241,12 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Prompts for and validates date input.
+     *
+     * @param prompt the prompt message
+     * @return the validated date
+     */
     private LocalDate getDateInput(String prompt) {
         while (true) {
             try {
@@ -1011,6 +1263,13 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Prompts for and validates date input with minimum date constraint.
+     *
+     * @param prompt the prompt message
+     * @param minDate the minimum allowed date
+     * @return the validated date
+     */
     private LocalDate getDateInput(String prompt, LocalDate minDate) {
         while (true) {
             try {
@@ -1027,6 +1286,11 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays room type selection menu and gets user choice.
+     *
+     * @return the selected RoomType, or null if cancelled
+     */
     private RoomType selectRoomType() {
         System.out.println("\n1. Single (€120) 2. Double (€180) 3. Deluxe (€250)");
         System.out.println("4. Family (€280) 5. Suite (€350) 6. Presidential (€500)");
@@ -1043,6 +1307,11 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Displays payment method selection menu and gets user choice.
+     *
+     * @return the selected PaymentMethod, or null if cancelled
+     */
     private PaymentMethod selectPaymentMethod() {
         System.out.println("\n1. Cash 2. Credit 3. Debit 4. Online 5. Mobile 0. Cancel");
         System.out.println("0. Cancel");
@@ -1057,6 +1326,89 @@ public class HotelManagementUI {
         }
     }
 
+    /**
+     * Gets the current logged-in user.
+     *
+     * @return the current User, or null if not logged in
+     */
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    /**
+     * Sets the current user.
+     *
+     * @param user the user to set as current
+     */
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
+
+    /**
+     * Checks if the UI is currently running.
+     *
+     * @return true if running, false otherwise
+     */
+    public boolean isRunning() {
+        return running;
+    }
+
+    /**
+     * Sets the running state.
+     *
+     * @param running the running state
+     */
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    /**
+     * Gets the user manager instance.
+     *
+     * @return the UserManager
+     */
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    /**
+     * Gets the room inventory instance.
+     *
+     * @return the RoomInventoryImpl
+     */
+    public RoomInventoryImpl getRoomInventory() {
+        return roomInventory;
+    }
+
+    /**
+     * Gets the payment manager instance.
+     *
+     * @return the PaymentManager
+     */
+    public PaymentManager getPaymentManager() {
+        return paymentManager;
+    }
+
+    /**
+     * Handles the user's choice from login menu.
+     *
+     * @param choice the menu option selected
+     */
+    public void handleLoginMenuChoice(int choice) {
+        switch (choice) {
+            case 1: handleLogin(); break;
+            case 2: handleGuestRegistration(); break;
+            case 3: displayHotelInformation(); break;
+            case 0: running = false; break;
+            default: System.out.println("Invalid choice.");
+        }
+    }
+
+    /**
+     * Main entry point for the application.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         HotelManagementUI ui = new HotelManagementUI();
         ui.start();
