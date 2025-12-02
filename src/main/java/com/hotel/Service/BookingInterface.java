@@ -11,9 +11,15 @@ import java.util.Scanner;
 
 //import static jdk.jfr.internal.util.Utils.isAfter;
 
+/**
+ * Represents a BookingInterface that was used for testing early in the project.
+ * It is a deprecated class where the functions have been superceded by HotelManagementUI.
+ */
 public class BookingInterface {
 
-
+    /**
+     * Constructor for BookingInterface
+     */
     public BookingInterface() {
     }
 
