@@ -39,7 +39,7 @@ public class BookingRegister {
 
     /**
      * getFormattedDate puts dates in a pleasant readable format
-     * @param date accepts date
+     * @param date the date to be formatted
      * @return date formatted for readability
      */
     public String getFormattedDate(LocalDate date){
