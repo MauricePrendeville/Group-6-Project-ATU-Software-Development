@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
  * Service class for managing payments and invoices in the hotel system.
  * Handles payment processing, invoice generation, refunds, and payment history.
  */
-
 public class PaymentManager {
 
     // Storage for payments and invoices
@@ -40,7 +39,6 @@ public class PaymentManager {
      * @throws IllegalArgumentException if validation fails
      * @throws IllegalStateException if payment processing fails
      */
-
     public Invoice processPayment(Booking booking, double amount,
                                   PaymentMethod paymentMethod, String guestName) {
         // Validate inputs

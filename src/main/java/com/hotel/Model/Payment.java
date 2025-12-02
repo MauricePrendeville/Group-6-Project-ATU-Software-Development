@@ -18,19 +18,42 @@ public class Payment {
     private static AtomicInteger paymentCounter = new AtomicInteger(1000);
 
     // Simple line-item support so facilities can attach charges to a Payment
+    /**
+     * Represents a single, itemized charge associated with a {@link Payment}.
+     *
+     * <p>This class is used to break down the total payment amount into individual components,
+     * such as the room charge and various facility charges (e.g., Spa, Gym, Dining).
+     * It holds the final, cumulative charge amount for a single item.</p>
+     */
     public static class LineItem {
         private final String description;
         private final double amount;
 
+        /**
+         * Constructs a new LineItem.
+         *
+         * @param description A brief explanation of the charge (e.g., "Spa Treatment (Spa)", "Double Room - 2 night(s)")
+         * @param amount The total monetary value of the charge for this specific item (e.g., total cost for 2 Spa treatments).
+         */
         public LineItem(String description, double amount) {
             this.description = description;
             this.amount = amount;
         }
 
+        /**
+         * Gets the description of the charge.
+         *
+         * @return The descriptive string for the line item.
+         */
         public String getDescription() {
             return description;
         }
 
+        /**
+         * Gets the total monetary amount for this line item.
+         *
+         * @return The total cost of the charge.
+         */
         public double getAmount() {
             return amount;
         }
@@ -395,11 +418,29 @@ public class Payment {
         return paymentId.equals(payment.paymentId);
     }
 
+    /**
+     * Generates a hash code for the Payment object.
+     *
+     * <p>This implementation relies solely on the unique {@code paymentId}. Since the
+     * payment ID is generated once and cannot change, it provides a stable and
+     * reliable hash for use in hash-based collections (like {@code HashMap} or {@code HashSet}).</p>
+     *
+     * @return The hash code based on the {@code paymentId}.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(paymentId);
     }
 
+    /**
+     * Returns a string representation of the Payment object.
+     *
+     * <p>This string is formatted to be concise yet informative, including the
+     * payment's unique identifier, associated booking, amount (formatted to two decimal places),
+     * payment method, status, guest name, and receipt number.</p>
+     *
+     * @return A string containing key details of the payment transaction.
+     */
     @Override
     public String toString() {
         return "Payment{" +
