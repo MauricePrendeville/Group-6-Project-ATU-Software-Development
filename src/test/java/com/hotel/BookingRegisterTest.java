@@ -56,7 +56,10 @@ class BookingRegisterTest {
     }
 
     @Test
-    void getFormattedDate() {
+    void testGetFormattedDate() {
+        BookingRegister bookingRegister = new BookingRegister();
+        String formattedDate = bookingRegister.getFormattedDate(LocalDate.of(2025,11,26));
+        assertEquals("26 Nov 2025", formattedDate);
     }
 
     @Test

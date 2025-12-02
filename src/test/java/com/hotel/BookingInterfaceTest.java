@@ -77,18 +77,49 @@ class BookingInterfaceTest {
     @Test
     void testGetValidDate() {
           BookingInterface bookingInterface = new BookingInterface();
+
           String input ="25\n11\n2025\n";
           System.setIn(new ByteArrayInputStream(input.getBytes()));
+          Scanner scanning = new Scanner(System.in);
 
-          LocalDate result = bookingInterface.getValidDate();
+          LocalDate result = bookingInterface.getValidDate(scanning);
           assertEquals(LocalDate.of(2025,11,25), result);
 
           String input2 ="28\n11\n2025\n";
           System.setIn(new ByteArrayInputStream(input2.getBytes()));
-
-          LocalDate result2 = bookingInterface.getValidDate(LocalDate.of(2025,11,25));
+          Scanner scanning2 = new Scanner(System.in);
+          LocalDate result2 = bookingInterface.getValidDate(scanning2, LocalDate.of(2025,11,25));
           assertEquals(LocalDate.of(2025,11,28), result2);
 
+        String input3 ="38\n11\n2025\n" +
+                       "28\n11\n2025\n";
+        System.setIn(new ByteArrayInputStream(input3.getBytes()));
+        Scanner scanning3 = new Scanner(System.in);
+        LocalDate result3 = bookingInterface.getValidDate(scanning3, LocalDate.of(2025,11,25));
+        assertEquals(LocalDate.of(2025,11,28), result3);
+
+        String input4 ="24\n11\n2025\n" +
+                "28\n11\n2025\n";
+        System.setIn(new ByteArrayInputStream(input4.getBytes()));
+        Scanner scanning4 = new Scanner(System.in);
+        LocalDate result4 = bookingInterface.getValidDate(scanning4, LocalDate.of(2025,11,25));
+        assertEquals(LocalDate.of(2025,11,28), result4);
+
+        String input5 ="25\n11\n2025\n" +
+                "28\n11\n2025\n";
+        System.setIn(new ByteArrayInputStream(input5.getBytes()));
+        Scanner scanning5 = new Scanner(System.in);
+        LocalDate result5 = bookingInterface.getValidDate(scanning5, LocalDate.of(2025,11,25));
+        assertEquals(LocalDate.of(2025,11,28), result5);
+
+        String input6 ="38\n11\n2025\n" +
+                "28\n11\n2025\n";
+        System.setIn(new ByteArrayInputStream(input6.getBytes()));
+        Scanner scanning6 = new Scanner(System.in);
+        LocalDate result6 = bookingInterface.getValidDate(scanning6);
+        assertEquals(LocalDate.of(2025,11,28), result6);
+
+        scanning.close();
     }
 
 
@@ -103,10 +134,12 @@ class BookingInterfaceTest {
 
         BookingInterface bookingInterface = new BookingInterface();
         String input2 = new StringBuilder()
-                //.append("25\n11\n2025\n")
-               // .append("28\n11\n2025\n")
+                .append("25\n11\n2025\n")
+                .append("28\n11\n2025\n")
          .append("1\nGrady\njanitor@overlookhotel.com\n123\npass\n").append("1\n").toString();
         System.setIn(new ByteArrayInputStream(input2.getBytes()));
         bookingInterface.getStayRequestDetails(roomInventory);
+
+        //assertEquals(Booking())
     }
 }
