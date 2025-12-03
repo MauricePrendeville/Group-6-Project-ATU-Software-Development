@@ -8,7 +8,7 @@ import java.util.Objects;
  * Represents a guest user in the hotel booking system.
  * A Guest can have a booking history, be marked as a returning guest,
  * and have a preferred payment method.
- * /
+ */
 public class Guest extends User {
 	/** Immutable list backing: booking identifiers associated with this guest. */
 	private List<String> bookingHistory;
