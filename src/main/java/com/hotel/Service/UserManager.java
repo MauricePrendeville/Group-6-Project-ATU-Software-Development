@@ -34,14 +34,26 @@ public class UserManager {
     }
 
     /**
-     * Generates a unique user ID.
-    */
+     * Generate a unique user ID by concatenating the provided prefix with
+     * an internal incrementing counter.
+     *
+     * @param prefix prefix to prepend to the generated id (may be null)
+     * @return newly generated unique user id string
+     */
     public String generateUserId(String prefix) {
         return prefix + (userCounter++);
     }
 
     /**
-     * Adds a user to the system.
+     * Register a new user in the system.
+     *
+     * This method validates that the provided user is non-null and that
+     * the user's id and email are not already present. The email is stored
+     * in a case-insensitive index.
+     *
+     * @param user user to add (must be non-null)
+     * @throws IllegalArgumentException when user is null, when the user id
+     *         already exists, or when the email is already registered
      */
     public void addUser(User user) {
         if (user == null) {
@@ -59,7 +71,11 @@ public class UserManager {
     }
 
     /**
-     * Gets a user by ID.
+     * Retrieve a user by their unique id.
+     *
+     * @param userId id of the user to look up (must be non-null, non-empty)
+     * @return the User if found, or {@code null} if no user with the id exists
+     * @throws IllegalArgumentException when {@code userId} is null or empty
      */
     public User getUser(String userId) {
         if (userId == null || userId.trim().isEmpty()) {
@@ -69,7 +85,11 @@ public class UserManager {
     }
 
     /**
-     * Gets a user by email.
+     * Retrieve a user by email address (case-insensitive).
+     *
+     * @param email email address to look up (must be non-null, non-empty)
+     * @return the User if found, or {@code null} when not found
+     * @throws IllegalArgumentException when {@code email} is null or empty
      */
     public User getUserByEmail(String email) {
         if (email == null || email.trim().isEmpty()) {
@@ -79,7 +99,11 @@ public class UserManager {
     }
 
     /**
-     * Authenticates a user with email and password.
+     * Authenticate a user by their email and password.
+     *
+     * @param email    user's email (case-insensitive)
+     * @param password plaintext password to validate
+     * @return the authenticated User when credentials match, otherwise {@code null}
      */
     public User authenticateUser(String email, String password) {
         if (email == null || password == null) {
@@ -94,7 +118,14 @@ public class UserManager {
     }
 
     /**
-     * Updates user information.
+     * Update an existing user's information.
+     *
+     * If the user's email changes the email index is updated accordingly
+     * and the new email must not already be in use by another user.
+     *
+     * @param user updated user object (must be non-null and exist in the system)
+     * @throws IllegalArgumentException when {@code user} is null, not found,
+     *         or the new email is already used by another user
      */
     public void updateUser(User user) {
         if (user == null) {
@@ -120,7 +151,11 @@ public class UserManager {
     }
 
     /**
-     * Deletes a user from the system.
+     * Delete a user by id.
+     *
+     * @param userId id of the user to remove
+     * @return {@code true} when a user was removed, {@code false} when no user
+     *         with the given id exists
      */
     public boolean deleteUser(String userId) {
         User user = users.remove(userId);
@@ -132,14 +167,23 @@ public class UserManager {
     }
 
     /**
-     * Gets all users in the system.
+     * Return a list containing all registered users.
+     *
+     * The returned list is a shallow copy and modifications to it do not
+     * affect the internal storage.
+     *
+     * @return modifiable list of all users
      */
     public List<User> getAllUsers() {
         return new ArrayList<>(users.values());
     }
 
     /**
-     * Gets users by role.
+     * Retrieve users who have the specified role.
+     *
+     * @param role role to filter by (must be non-null)
+     * @return list of users matching the role
+     * @throws IllegalArgumentException when {@code role} is null
      */
     public List<User> getUsersByRole(UserRole role) {
         if (role == null) {
@@ -151,7 +195,11 @@ public class UserManager {
     }
 
     /**
-     * Searches users by name (case-insensitive partial match).
+     * Search users by name using a case-insensitive partial match.
+     *
+     * @param searchTerm substring to match against user names
+     * @return list of users whose names contain the search term; empty list
+     *         when {@code searchTerm} is null or empty
      */
     public List<User> searchUsersByName(String searchTerm) {
         if (searchTerm == null || searchTerm.trim().isEmpty()) {
@@ -165,14 +213,20 @@ public class UserManager {
     }
 
     /**
-     * Gets total user count.
+     * Return the total number of registered users.
+     *
+     * @return number of users currently stored
      */
     public int getTotalUserCount() {
         return users.size();
     }
 
     /**
-     * Checks if email is already registered.
+     * Check whether an email address is already registered (case-insensitive).
+     *
+     * @param email email to check
+     * @return {@code true} if the email exists in the index; {@code false}
+     *         when {@code email} is null or not present
      */
     public boolean emailExists(String email) {
         if (email == null) {
